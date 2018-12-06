@@ -40,22 +40,6 @@ describe('head()', function() {
     assert.deepEqual(head(readFileSync,validater,parameters),'on');
   });
 
-  it('should return the lines when multiple files are provided', function() {
-    let file = 'one\ntwo\nthree';
-    let file1 = 'the\na\nan';
-    let parameters = {type:'n',lines:'2',inputFiles:[file,file1]}
-    let expectedOutput = '==> one\ntwo\nthree <==\none\ntwo\n\n==> the\na\nan <==\nthe\na'
-    assert.deepEqual(head(readFileSync,validater,parameters),expectedOutput);
-  });
-
-  it('should return the characters when multiple files are provided', function() {
-    let file = 'one\ntwo';
-    let file1 = 'three\nfour';
-    let parameters = {type:'c',lines:'2',inputFiles: [file,file1]}
-    let expectedOutput = '==> one\ntwo <==\non\n\n==> three\nfour <==\nth'
-    assert.deepEqual(head(readFileSync,validater,parameters),expectedOutput);
-  });
-
   it("should return the lines for file which exists and error for file which doesn't exists", function() {
     let file = 'one\ntwo\nthree';
     let file1 = 'not exists';

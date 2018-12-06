@@ -9,6 +9,16 @@ const getCharacters = function(content,character){
 };
 
 const head = function(readFileSync,validater,{type,lines,inputFiles}){
+  if (type != 'n' && type !='c') {
+    return 'head: illegal option -- ' + type + '\n' + 'usage: head [-n lines | -c bytes] [file ...]';
+  }
+  if (isNaN(lines - 0) || lines < 1) {
+    if(type == 'n'){
+      return 'head: illegal line count -- ' + lines;
+    }
+    return 'head: illegal byte count -- ' + lines;
+  }
+
   return inputFiles.map(function(file){
     if (!validater(file)) {
       return 'head: '+file+': No such file or directory';
