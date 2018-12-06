@@ -8,16 +8,24 @@ const getCharacters = function(content,character){
   return result.join('');
 };
 
+const head = function(readFileSync,validater,{type,lines,inputFiles}){
+  return inputFiles.map(function(file){
+    if (!validater(file)) {
+      return 'head: '+file+': No such file or directory';
+    }
 
-const head = function(readFileSync,{type,lines,inputFiles}){
-  let content = readFileSync(inputFiles.toString(),'utf8');
-  let result = getLines(content,lines);
-  if(type == 'c'){
-    result = getCharacters(content,lines);
+    let content = readFileSync(file,'utf8');
+    let result = getLines(content,lines);
+    let fileName = "==> " + file + " <==" + '\n';
+    if(type == 'c'){
+      result = getCharacters(content,lines);
+    }
+    if(inputFiles.length > 1){
+      return fileName + result + '\n';
+    }
     return result;
-  }
-  return result;
+  }).join('\n');
 }
-  module.exports = {getLines,getCharacters,head};
+module.exports = {getLines,getCharacters,head};
 
 
