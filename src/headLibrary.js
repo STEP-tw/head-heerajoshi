@@ -12,10 +12,6 @@ const getCharacters = function(content,character){
 const head = function(readFileSync,{type,lines,inputFiles}){
   let content = readFileSync(inputFiles.toString(),'utf8');
   let result = getLines(content,lines);
-  if(type == 'n'){
-    result = getLines(content,lines);
-    return result;
-  }
   if(type == 'c'){
     result = getCharacters(content,lines);
     return result;
