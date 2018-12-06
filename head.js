@@ -1,11 +1,10 @@
-const fs = require('fs');
-const {lineSeperator} = require('./src/headLibrary.js');
-let userInput = process.argv.slice(2)
+const {readFileSync} = require('fs');
+const {getlines,getCharactor,head} = require('./src/headLibrary.js');
+const {inputSeparator} = require('./src/utilLib.js') 
 const main = function(){
-  let fileName = process.argv[3];
-  let requiredLine = process.argv[2]
-  let content = fs.readFileSync(fileName, 'utf8');
-  console.log(lineSeperator(content,requiredLine));
+  let userInput = process.argv.slice(2)
+  let inputs = inputSeparator(userInput);
+  console.log(head(readFileSync,inputs));
 };
 
 main();
