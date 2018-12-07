@@ -30,20 +30,20 @@ describe('getCharacter()',function(){
 describe('head()', function() {
   it('should return the lines as per provided input', function() {
     let file = 'one\ntwo\nthree\nfour';
-    let parameters = {type:'n',lines:'3',inputFiles:[file]}
+    let parameters = {option:'n',count:'3',inputFiles:[file]}
     assert.deepEqual(head(readFileSync,validater,parameters),'one\ntwo\nthree');
   });
 
   it('should return the characters as per provided input', function() {
     let file = 'one\ntwo\nthree\nfour';
-    let parameters = {type:'c',lines:'2',inputFiles: [file]}
+    let parameters = {option:'c',count:'2',inputFiles: [file]}
     assert.deepEqual(head(readFileSync,validater,parameters),'on');
   });
 
   it("should return the lines for file which exists and error for file which doesn't exists", function() {
     let file = 'one\ntwo\nthree';
     let file1 = 'not exists';
-    let parameters = {type:'n',lines:'2',inputFiles:[file,file1]}
+    let parameters = {option:'n',count:'2',inputFiles:[file,file1]}
     let expectedOutput = '==> one\ntwo\nthree <==\none\ntwo\n\nhead: not exists: No such file or directory'
     assert.deepEqual(head(readFileSync,validater,parameters),expectedOutput);
   });

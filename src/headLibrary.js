@@ -1,5 +1,5 @@
-const getLines = function(content,lines){
-  let result = content.split('\n').slice(0,lines);
+const getLines = function(content,count){
+  let result = content.split('\n').slice(0,count);
   return result.join('\n');
 };
 
@@ -8,15 +8,15 @@ const getCharacters = function(content,character){
   return result.join('');
 };
 
-const head = function(readFileSync,validater,{type,lines,inputFiles}){
-  if (type != 'n' && type !='c') {
-    return 'head: illegal option -- ' + type + '\n' + 'usage: head [-n lines | -c bytes] [file ...]';
+const head = function(readFileSync,validater,{option,count,inputFiles}){
+  if (option != 'n' && option !='c') {
+    return 'head: illegal option -- ' + option + '\n' + 'usage: head [-n lines | -c bytes] [file ...]';
   }
-  if (isNaN(lines - 0) || lines < 1) {
-    if(type == 'n'){
-      return 'head: illegal line count -- ' + lines;
+  if (isNaN(count - 0) || count < 1) {
+    if(option == 'n'){
+      return 'head: illegal line count -- ' + count;
     }
-    return 'head: illegal byte count -- ' + lines;
+    return 'head: illegal byte count -- ' + count;
   }
 
   return inputFiles.map(function(file){
@@ -25,10 +25,10 @@ const head = function(readFileSync,validater,{type,lines,inputFiles}){
     }
 
     let content = readFileSync(file,'utf8');
-    let result = getLines(content,lines);
+    let result = getLines(content,count);
     let fileName = "==> " + file + " <==" + '\n';
-    if(type == 'c'){
-      result = getCharacters(content,lines);
+    if(option == 'c'){
+      result = getCharacters(content,count);
     }
     if(inputFiles.length > 1){
       return fileName + result + '\n';
