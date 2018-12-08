@@ -18,17 +18,29 @@ const errorHandling = function({option,count,inpputFiles}){
     }
     return 'head: illegal byte count -- ' + count;
   }
-}  
+};  
+
+const isInValidFile = function(validater,file){
+  return !validater(file);
+};
+
+const missingFileError = function(validater,file){
+  let invalidfile = isInValidFile(validater,file);
+  if(invalidfile){
+    return 'head: '+file+': No such file or directory';
+  }
+};
+
 
 const head = function(readFileSync,validater,{option,count,inputFiles}){
   let typeCall = {'n':getLines, 'c':getCharacters };
   let error = errorHandling({option,count,inputFiles});
-    if(error) {return error};
+  if(error) {return error};
   return inputFiles.map(function(file){
-    if (!validater(file)) {
-      return 'head: '+file+': No such file or directory';
+    let missingFile =  missingFileError(validater,file);
+    if(missingFile){
+      return missingFile;
     }
-
     let content = readFileSync(file,'utf8');
     let result = typeCall[option](content,count);
     let fileName = "==> " + file + " <==" + '\n';
@@ -40,6 +52,6 @@ const head = function(readFileSync,validater,{option,count,inputFiles}){
 }
 
 
-module.exports = {getLines,getCharacters,errorHandling,head};
+module.exports = {getLines,getCharacters,errorHandling,isInValidFile,missingFileError,head};
 
 
