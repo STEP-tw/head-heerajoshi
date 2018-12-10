@@ -1,5 +1,5 @@
 const assert = require('assert');
-const {getLines,getCharacters,errorHandling,head} = require('../src/headLibrary.js');
+const {getLines,getCharacters,errorHandling,head,getLinesTail,tail} = require('../src/headLibrary.js');
 
 const readFileSync  = function(string){
   return string;
@@ -90,4 +90,23 @@ describe('errorHandling()', function() {
     assert.deepEqual(errorHandling(parameters),'head: illegal byte count -- ' + 'x');
   });
 });
+
+describe('getLinesTail()',function(){
+  it('shoud return the 10 lines by default',function(){
+    let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
+    let expectedOutput = 'After \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
+    assert.deepEqual(getLinesTail(string,10),expectedOutput);
+  })
+  it('shoud return 1 lines by givin input',function(){
+    let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
+    let expectedOutput = 'called \nin the coins'
+    assert.deepEqual(getLinesTail(string,1),expectedOutput);
+  })
+  it('shoud return the 4 lines in input 4',function(){
+    let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
+    let expectedOutput = ' coins\n were\nCongress \ncalled \nin the coins'
+    assert.deepEqual(getLinesTail(string,4),expectedOutput);
+  })
+});
+
 
