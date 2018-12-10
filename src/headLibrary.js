@@ -87,7 +87,7 @@ const tail = function(userInput,fs){
     let content = readFileSync(file,'utf8')
     let result = typeCall[option](content,count)
     if(inputFiles.length > 1){
-      return filename + result ;
+      return filename +'\n'+ result ;
     }
     return result; 
   }).join('\n');
