@@ -4,7 +4,7 @@ const getLines = function(content, count) {
 };
 
 const getLinesTail = function(content,count){
-  let totalLine = content.split('\n').length - 1;
+  let totalLine = content.split('\n').length;
   let start = totalLine - count ;
   let result = content.split('\n').slice(start);
   return  result.join('\n');
@@ -102,5 +102,6 @@ module.exports = {
   head,
   getFileHeading,
   getLinesTail,
+  getCharacterTail,
   tail
 };
