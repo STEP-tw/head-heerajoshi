@@ -17,7 +17,7 @@ const fs = require('fs');
 const {getlines,tail} = require('./src/headLibrary.js');
 const {inputSeparator} = require('./src/utilLib.js')
 let userArg = process.argv.slice(2);
-main = function(){
+const main = function(){
 let inputs = inputSeparator(userArg);
 console.log(tail(inputs,fs))
 }
