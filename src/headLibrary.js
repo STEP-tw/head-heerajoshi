@@ -10,6 +10,13 @@ const getLinesTail = function(content,count){
   return  result.join('\n');
 }
 
+const getCharacterTail = function(content,count){
+  let totalLine = content.split('').length;
+  let start = totalLine - count ;
+  let result = content.split('').slice(start);
+  return  result.join('');
+}
+
 const getCharacters = function(content, character) {
   let result = content.split("").slice(0, character);
   return result.join("");
@@ -44,7 +51,7 @@ const missingFileError = function(validater, file) {
 };
 
 const getFileHeading = function(file) {
-  return "==> " + file + " <==" + "\n";
+  return "==> " + file + " <==" ;
 };
 
 const head = function(readFileSync, validater, { option, count, inputFiles }) {
@@ -61,9 +68,9 @@ const head = function(readFileSync, validater, { option, count, inputFiles }) {
       }
       let content = readFileSync(file, "utf8");
       let result = typeCall[option](content, count);
-      let fileName = getFileHeading(file);
+      let fileName = getFileHeading(file) + '\n';
       if (inputFiles.length > 1) {
-        return fileName + result + "\n";
+        return fileName + result + '\n';
       }
       return result;
     })
@@ -71,12 +78,17 @@ const head = function(readFileSync, validater, { option, count, inputFiles }) {
 };
 
 const tail = function(userInput,fs){
-  let typeCall = {n: getLinesTail}
+  let typeCall = {n: getLinesTail,c:getCharacterTail}
   let {readFileSync,existsSync} = fs;
   let {option,count,inputFiles} = userInput;
   return inputFiles.map(function(file){
+    let filename = getFileHeading(file);
+
     let content = readFileSync(file,'utf8')
     let result = typeCall[option](content,count)
+    if(inputFiles.length > 1){
+      return filename + result ;
+    }
     return result; 
   }).join('\n');
 }
