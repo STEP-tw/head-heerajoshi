@@ -43,10 +43,11 @@ const isInValidFile = function(validater, file) {
   return !validater(file);
 };
 
-const missingFileError = function(validater, file) {
+const missingFileError = function(validater, file,command) {
+  let type={'h':'head','t':'tail'}
   let invalidfile = isInValidFile(validater, file);
   if (invalidfile) {
-    return "head: " + file + ": No such file or directory";
+    return type[command] + ": " + file + ": No such file or directory";
   }
 };
 
@@ -62,7 +63,7 @@ const head = function(readFileSync, validater, { option, count, inputFiles }) {
   }
   return inputFiles
     .map(function(file) {
-      let missingFile = missingFileError(validater, file);
+      let missingFile = missingFileError(validater, file,'h');
       if (missingFile) {
         return missingFile;
       }
@@ -82,7 +83,11 @@ const tail = function(userInput,fs){
   let {readFileSync,existsSync} = fs;
   let {option,count,inputFiles} = userInput;
   return inputFiles.map(function(file){
-    let filename = getFileHeading(file);
+    let missingFile = missingFileError(existsSync, file,'t');
+      if (missingFile) {
+        return missingFile;
+      }
+      let filename = getFileHeading(file);
 
     let content = readFileSync(file,'utf8')
     let result = typeCall[option](content,count)
