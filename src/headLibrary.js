@@ -6,6 +6,7 @@ const getLines = function(content, count) {
 const getLinesTail = function(content,count){
   let totalLine = content.split('\n').length;
   let start = totalLine - count ;
+  start = Math.max(0,start);
   let result = content.split('\n').slice(start);
   return  result.join('\n');
 }
