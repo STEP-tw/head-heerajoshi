@@ -63,7 +63,14 @@ const errorHandlingTail = function({ option, count, inpputFiles }) {
       "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
     );
   }
+  if (isNaN(count - 0)) {
+    if (option == "n") {
+      return "tail: illegal offset -- " + count;
+    }
+    return "tail: illegal offset -- " + count;
+  }
 }
+
 const head = function(readFileSync, validater, { option, count, inputFiles }) {
   let typeCall = { n: getLines, c: getCharacters };
   let error = errorHandling({ option, count, inputFiles });
