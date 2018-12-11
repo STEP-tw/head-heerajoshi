@@ -54,7 +54,16 @@ const missingFileError = function(validater, file,command) {
 const getFileHeading = function(file) {
   return "==> " + file + " <==" ;
 };
-
+const errorHandlingTail = function({ option, count, inpputFiles }) {
+  if (option != "n" && option != "c") {
+    return (
+      "tail: illegal option -- " +
+      option +
+      "\n" +
+      "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
+    );
+  }
+}
 const head = function(readFileSync, validater, { option, count, inputFiles }) {
   let typeCall = { n: getLines, c: getCharacters };
   let error = errorHandling({ option, count, inputFiles });
@@ -79,9 +88,13 @@ const head = function(readFileSync, validater, { option, count, inputFiles }) {
 };
 
 const tail = function(userInput,fs){
-  let typeCall = {n: getLinesTail,c:getCharacterTail}
-  let {readFileSync,existsSync} = fs;
   let {option,count,inputFiles} = userInput;
+  let typeCall = {n: getLinesTail,c:getCharacterTail}
+  let error = errorHandlingTail({ option, count, inputFiles });
+  if (error) {
+    return error;
+  }
+  let {readFileSync,existsSync} = fs;
   return inputFiles.map(function(file){
     let missingFile = missingFileError(existsSync, file,'t');
       if (missingFile) {
@@ -108,5 +121,6 @@ module.exports = {
   getFileHeading,
   getLinesTail,
   getCharacterTail,
-  tail
+  tail,
+  errorHandlingTail
 };

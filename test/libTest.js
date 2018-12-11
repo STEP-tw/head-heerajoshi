@@ -1,5 +1,5 @@
 const assert = require('assert');
-const {getLines,getCharacters,errorHandling,head,getLinesTail,getCharacterTail,tail} = require('../src/headLibrary.js');
+const {getLines,getCharacters,errorHandling,head,errorHandlingTail,getLinesTail,getCharacterTail,tail} = require('../src/headLibrary.js');
 
 const readFileSync  = function(string){
   return string;
@@ -125,6 +125,15 @@ describe('getCharacterTail())',function(){
     let expectedOutput = 'ns'
     assert.deepEqual(getCharacterTail(string,2),expectedOutput);
   })
+});
+
+describe('errorHandlingTail()', function() {
+  it('should return the error massage if input have any other option', function() {
+    let file = 'one\ntwo\nthree';
+    let parameters = {option:'v',count:'3',inputFiles:[file]}
+    assert.deepEqual(errorHandlingTail(parameters),'tail: illegal option -- ' + 'v' + '\n' + 'usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]'
+ );
+  });
 });
 
 
