@@ -68,7 +68,11 @@ describe('head()', function() {
     let parameters = {option:'n',count:'3',inputFiles:[file]}
     assert.deepEqual(head(fs,parameters),'one\ntwo\nthree');
   });
-
+  it('should return the hole file when count is more than the line of the input file', function() {
+    let file = 'one\ntwo\nthree\nfour';
+    let parameters = {option:'n',count:'30',inputFiles:[file]}
+    assert.deepEqual(head(fs,parameters),'one\ntwo\nthree\nfour');
+  });
   it('should return the characters as per provided input', function() {
     let file = 'one\ntwo\nthree\nfour';
     let parameters = {option:'c',count:'2',inputFiles: [file]}
