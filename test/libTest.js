@@ -134,6 +134,17 @@ describe('errorHandlingTail()', function() {
     assert.deepEqual(errorHandlingTail(parameters),'tail: illegal option -- ' + 'v' + '\n' + 'usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]'
  );
   });
+  it('should return illegal line error massage for invalid lines', function() {
+    let file = 'one\ntwo\nthree';
+    let parameters = {option:'n',count:'5r',inputFiles: [file]}
+    assert.deepEqual(errorHandlingTail(parameters),"tail: illegal offset -- " + '5r');
+  });
+
+  it("should return illegal byte error massage for invalid bytes" ,function() {
+    let file = 'one\ntwo\nthree';
+    let parameters = {option:'c',count:'5r',inputFiles:[file]}
+    assert.deepEqual(errorHandlingTail(parameters),"tail: illegal offset -- " + '5r');
+  });
 });
 
 describe('tail()', function() {

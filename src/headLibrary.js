@@ -65,9 +65,9 @@ const errorHandlingTail = function({ option, count, inpputFiles }) {
     );
   }
   if (isNaN(count - 0)) {
-    if (option == "n") {
-      return "tail: illegal offset -- " + count;
-    }
+    // if (option == "n") {
+    //   return "tail: illegal offset -- " + count;
+    // }
     return "tail: illegal offset -- " + count;
   }
 }
