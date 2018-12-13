@@ -35,7 +35,11 @@ describe('getFileHeading()',function(){
     let expectedOutput = "==> " + 'The' + " <==" ;
     assert.deepEqual(getFileHeading(string),expectedOutput);
   })
-  
+  it('shoud return file name with header',function(){
+    let string = 'The'
+    let expectedOutput = "==> " + 'The' + " <==" ;
+    assert.deepEqual(getFileHeading(string),expectedOutput);
+  })
 })
 
 describe('getCharacter()',function(){
