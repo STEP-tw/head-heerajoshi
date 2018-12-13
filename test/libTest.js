@@ -1,5 +1,5 @@
 const assert = require('assert');
-const {getLines,getCharacters,errorHandling,head,errorHandlingTail,getLinesTail,getCharacterTail,tail,getFileHeading} = require('../src/headLibrary.js');
+const {getLines,getCharacters,errorHandling,head,errorHandlingTail,getLinesTail,getCharacterTail,tail,getFileHeading} = require('../src/lib.js');
 
 const readFileSync  = function(string){
   return string;
