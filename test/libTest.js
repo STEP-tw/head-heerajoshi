@@ -184,6 +184,24 @@ describe('tail()', function() {
     let parameters = {option:'n',count:'3',inputFiles:[file]}
     assert.deepEqual(tail(parameters,fs),'two\nthree\nfour');
   });
+  
+  it('should return usage massage for wrong option', function() {
+    let file = 'one\ntwo\nthree\nfour';
+    let parameters = {option:'g',count:'7',inputFiles:[file]}
+    assert.deepEqual(tail(parameters,fs),'tail: illegal option -- g\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');
+  });
+  
+  it('should return error massage for wrong count', function() {
+    let file = 'one\ntwo\nthree\nfour';
+    let parameters = {option:'n',count:'7r',inputFiles:[file]}
+    assert.deepEqual(tail(parameters,fs),'tail: illegal offset -- 7r');
+  });
+
+  it('should return full file when count is more than the the total no of line', function() {
+    let file = 'one\ntwo\nthree\nfour';
+    let parameters = {option:'n',count:'40',inputFiles:[file]}
+    assert.deepEqual(tail(parameters,fs),'one\ntwo\nthree\nfour');
+  });
 
   it('should return the characters as per provided input', function() {
     let file = 'one\ntwo\nthree\nfour';
