@@ -136,5 +136,27 @@ describe('errorHandlingTail()', function() {
   });
 });
 
+describe('tail()', function() {
+  it('should return the lines as per provided input', function() {
+    let file = 'one\ntwo\nthree\nfour';
+    let parameters = {option:'n',count:'3',inputFiles:[file]}
+    assert.deepEqual(tail(parameters,readFileSync,validater),'two\nthree\nfour');
+  });
+
+  it('should return the characters as per provided input', function() {
+    let file = 'one\ntwo\nthree\nfour';
+    let parameters = {option:'c',count:'2',inputFiles: [file]}
+    assert.deepEqual(tail(parameters ,readFileSync,validater),'ur');
+  });
+
+  it("should return the lines for file which exists and error for file which doesn't exists", function() {
+    let file = 'one\ntwo\nthree';
+    let file1 = 'not exists';
+    let parameters = {option:'n',count:'2',inputFiles:[file,file1]}
+    let expectedOutput = '==> one\ntwo\nthree <==\ntwo\nthree\ntail: not exists: No such file or directory'
+    assert.deepEqual(tail(parameters ,readFileSync,validater),expectedOutput);
+  });
+});
+
 
 

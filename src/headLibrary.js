@@ -41,7 +41,7 @@ const errorHandling = function({ option, count, inpputFiles }) {
 };
 
 const isInValidFile = function(validater, file) {
-  return !validater(file);
+  return !(validater(file));
 };
 
 const missingFileError = function(validater, file,command) {
@@ -95,16 +95,15 @@ const head = function(readFileSync, validater, { option, count, inputFiles }) {
     .join("\n");
 };
 
-const tail = function(userInput,fs){
+const tail = function(userInput,readFileSync,validater){
   let {option,count,inputFiles} = userInput;
   let typeCall = {n: getLinesTail,c:getCharacterTail}
   let error = errorHandlingTail({ option, count, inputFiles });
   if (error) {
     return error;
   }
-  let {readFileSync,existsSync} = fs;
   return inputFiles.map(function(file){
-    let missingFile = missingFileError(existsSync, file,'t');
+    let missingFile = missingFileError(validater, file,'t');
       if (missingFile) {
         return missingFile;
       }
