@@ -69,50 +69,42 @@ const errorHandlingTail = function({ option, count, inpputFiles }) {
   }
 }
 
-const head = function(readFileSync, validater, { option, count, inputFiles }) {
+const runCommand = function(userInput,typeCall,fs,commandType,file){
+  let {option,count,inputFiles} = userInput;
+  const {existsSync} = fs;
+  let missingFile = missingFileError(existsSync, file,commandType);
+    if (missingFile) {
+      return missingFile;
+    }
+    let filename = getFileHeading(file);
+
+  let content = fs.readFileSync(file,'utf8')
+  let result = typeCall[option](content,count)
+  if(inputFiles.length > 1){
+    return filename +'\n'+ result ;
+  }
+  return result; 
+}
+
+
+const head = function(fs, userInput) {
   let typeCall = { n: getLines, c: getCharacters };
-  let error = errorHandling({ option, count, inputFiles });
+  let error = errorHandling(userInput);
   if (error) {
     return error;
   }
-  return inputFiles
-    .map(function(file) {
-      let missingFile = missingFileError(validater, file,'h');
-      if (missingFile) {
-        return missingFile;
-      }
-      let content = readFileSync(file, "utf8");
-      let result = typeCall[option](content, count);
-      let fileName = getFileHeading(file) + '\n';
-      if (inputFiles.length > 1) {
-        return fileName + result + '\n';
-      }
-      return result;
-    })
-    .join("\n");
+  let result = runCommand.bind(null,userInput,typeCall,fs,'h');
+  return userInput.inputFiles.map(result).join("\n");
 };
 
-const tail = function(userInput,readFileSync,validater){
-  let {option,count,inputFiles} = userInput;
+const tail = function(userInput,fs){
   let typeCall = {n: getLinesTail,c:getCharacterTail}
-  let error = errorHandlingTail({ option, count, inputFiles });
+  let error = errorHandlingTail(userInput);
   if (error) {
     return error;
   }
-  return inputFiles.map(function(file){
-    let missingFile = missingFileError(validater, file,'t');
-      if (missingFile) {
-        return missingFile;
-      }
-      let filename = getFileHeading(file);
-
-    let content = readFileSync(file,'utf8')
-    let result = typeCall[option](content,count)
-    if(inputFiles.length > 1){
-      return filename +'\n'+ result ;
-    }
-    return result; 
-  }).join('\n');
+  let result = runCommand.bind(null,userInput,typeCall,fs,'t');
+  return userInput.inputFiles.map(result).join('\n');
 }
 
 module.exports = {
