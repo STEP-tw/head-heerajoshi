@@ -1,5 +1,5 @@
 const assert = require('assert');
-const {getLines,getCharacters,errorHandling,head,errorHandlingTail,getLinesTail,getCharacterTail,tail} = require('../src/headLibrary.js');
+const {getLines,getCharacters,errorHandling,head,errorHandlingTail,getLinesTail,getCharacterTail,tail,getFileHeading} = require('../src/headLibrary.js');
 
 const readFileSync  = function(string){
   return string;
@@ -28,6 +28,15 @@ describe('getLines()',function(){
     assert.deepEqual(getLines(string,4),expectedOutput);
   })
 });
+
+describe('getFileHeading()',function(){
+  it('shoud return file name with header',function(){
+    let string = 'The'
+    let expectedOutput = "==> " + 'The' + " <==" ;
+    assert.deepEqual(getFileHeading(string),expectedOutput);
+  })
+  
+})
 
 describe('getCharacter()',function(){
   it('shoud return the 10 character for input10',function(){
@@ -168,6 +177,4 @@ describe('tail()', function() {
     assert.deepEqual(tail(parameters ,readFileSync,validater),expectedOutput);
   });
 });
-
-
 
