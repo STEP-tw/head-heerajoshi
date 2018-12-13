@@ -13,13 +13,13 @@
   node ./tail.js -c5 file1 file2
   node ./tail.js -c 5 file1 file2
 */
-const {readFileSync,existsSync} = require('fs');
+const fs = require('fs');
 const {tail} = require('./src/headLibrary.js');
 const {inputSeparator} = require('./src/utilLib.js')
 let userArg = process.argv.slice(2);
 const main = function(){
 let inputs = inputSeparator(userArg);
-console.log(tail(inputs,readFileSync,existsSync))
+console.log(tail(inputs,fs))
 }
 
 main();
