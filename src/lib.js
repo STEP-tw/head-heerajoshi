@@ -23,7 +23,7 @@ const getCharacters = function(content, character) {
   return result.join("");
 };
 
-const errorHandling = function({ option, count, inpputFiles }) {
+const errorHandling = function({ option, count}) {
   if (option != "n" && option != "c") {
     return (
       "head: illegal option -- " +
@@ -55,7 +55,8 @@ const missingFileError = function(validater, file,command) {
 const getFileHeading = function(file) {
   return "==> " + file + " <==" ;
 };
-const errorHandlingTail = function({ option, count, inpputFiles }) {
+
+const errorHandlingTail = function({ option, count}) {
   if (option != "n" && option != "c") {
     return (
       "tail: illegal option -- " +
@@ -69,41 +70,44 @@ const errorHandlingTail = function({ option, count, inpputFiles }) {
   }
 }
 
-const runCommand = function(userInput,typeCall,fs,commandType,file){
+const addHeader = function(inputFiles,file,result){
+if(inputFiles.length > 1){
+  return file +'\n'+ result ;
+}
+return result; 
+}
+
+const runCommand = function(userInput,opeartion,fs,commandType,file){
   let {option,count,inputFiles} = userInput;
   const {existsSync} = fs;
   let missingFile = missingFileError(existsSync, file,commandType);
     if (missingFile) {
       return missingFile;
     }
-    let filename = getFileHeading(file);
-
-  let content = fs.readFileSync(file,'utf8')
-  let result = typeCall[option](content,count)
-  if(inputFiles.length > 1){
-    return filename +'\n'+ result ;
-  }
-  return result; 
+  let fileName = getFileHeading(file);
+  let content = fs.readFileSync(file,'utf8');
+  let result = opeartion[option](content,count);
+  return addHeader(inputFiles,fileName,result); 
 }
 
 
 const head = function(fs, userInput) {
-  let typeCall = { n: getLines, c: getCharacters };
+  let opeartion = { n: getLines, c: getCharacters };
   let error = errorHandling(userInput);
   if (error) {
     return error;
   }
-  let result = runCommand.bind(null,userInput,typeCall,fs,'h');
+  let result = runCommand.bind(null,userInput,opeartion,fs,'h');
   return userInput.inputFiles.map(result).join("\n");
 };
 
 const tail = function(userInput,fs){
-  let typeCall = {n: getLinesTail,c:getCharacterTail}
+  let opeartion = {n: getLinesTail,c:getCharacterTail}
   let error = errorHandlingTail(userInput);
   if (error) {
     return error;
   }
-  let result = runCommand.bind(null,userInput,typeCall,fs,'t');
+  let result = runCommand.bind(null,userInput,opeartion,fs,'t');
   return userInput.inputFiles.map(result).join('\n');
 }
 
@@ -118,5 +122,6 @@ module.exports = {
   getLinesTail,
   getCharacterTail,
   tail,
-  errorHandlingTail
+  errorHandlingTail,
+  runCommand
 };
