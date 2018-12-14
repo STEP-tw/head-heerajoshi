@@ -1,9 +1,14 @@
-const getLines = function(content, count) {
+const getFirstNLines = function(content, count) {
   let result = content.split("\n").slice(0,count);
   return result.join("\n");
 };
 
-const getLinesTail = function(content,count){
+const getFirstNBytes = function(content, character) {
+  let result = content.split("").slice(0, character);
+  return result.join("");
+};
+
+const getLastNLines = function(content,count){
   let totalLine = content.split('\n').length;
   let start = totalLine - count ;
   start = Math.max(0,start);
@@ -11,17 +16,12 @@ const getLinesTail = function(content,count){
   return  result.join('\n');
 }
 
-const getCharacterTail = function(content,count){
+const getLastNBytes = function(content,count){
   let totalLine = content.split('').length;
   let start = totalLine - count ;
   let result = content.split('').slice(start);
   return  result.join('');
 }
-
-const getCharacters = function(content, character) {
-  let result = content.split("").slice(0, character);
-  return result.join("");
-};
 
 const errorHandling = function({ option, count}) {
   if (option != "n" && option != "c") {
@@ -40,13 +40,13 @@ const errorHandling = function({ option, count}) {
   }
 };
 
-const isInValidFile = function(validater, file) {
+const isInvalidFile = function(validater, file) {
   return !(validater(file));
 };
 
 const missingFileError = function(validater, file,command) {
   let type={'h':'head','t':'tail'}
-  let invalidfile = isInValidFile(validater, file);
+  let invalidfile = isInvalidFile(validater, file);
   if (invalidfile) {
     return type[command] + ": " + file + ": No such file or directory";
   }
@@ -92,7 +92,7 @@ const runCommand = function(userInput,opeartion,fs,commandType,file){
 
 
 const head = function(fs, userInput) {
-  let opeartion = { n: getLines, c: getCharacters };
+  let opeartion = { n: getFirstNLines, c: getFirstNBytes };
   let error = errorHandling(userInput);
   if (error) {
     return error;
@@ -102,7 +102,7 @@ const head = function(fs, userInput) {
 };
 
 const tail = function(userInput,fs){
-  let opeartion = {n: getLinesTail,c:getCharacterTail}
+  let opeartion = {n: getLastNLines,c:getLastNBytes}
   let error = errorHandlingTail(userInput);
   if (error) {
     return error;
@@ -112,15 +112,15 @@ const tail = function(userInput,fs){
 }
 
 module.exports = {
-  getLines,
-  getCharacters,
+  getFirstNLines,
+  getFirstNBytes,
   errorHandling,
-  isInValidFile,
+  isInvalidFile,
   missingFileError,
   head,
   getFileHeading,
-  getLinesTail,
-  getCharacterTail,
+  getLastNLines,
+  getLastNBytes,
   tail,
   errorHandlingTail,
   runCommand
