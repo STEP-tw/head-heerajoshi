@@ -1,26 +1,11 @@
-const getFirstNLines = function(content, count) {
-  let result = content.split("\n").slice(0, count);
-  return result.join("\n");
+const fetchHeadContent = function(content, count, delimiter) {
+  let result = content.split(delimiter).slice(0, count);
+  return result.join(delimiter);
 };
 
-const getFirstNBytes = function(content, count) {
-  let result = content.split("").slice(0, count);
-  return result.join("");
-};
-
-const getLastNLines = function(content, count) {
-  let totalNumOfLine = content.split("\n").length;
-  let start = totalNumOfLine - count;
-  start = Math.max(0, start);
-  let result = content.split("\n").slice(start);
-  return result.join("\n");
-};
-
-const getLastNBytes = function(content, count) {
-  let totalLine = content.split("").length;
-  let start = totalLine - count;
-  let result = content.split("").slice(start);
-  return result.join("");
+const fetchTailContent = function(content, count,delimiter) {
+  let result = content.split(delimiter).slice(-Math.abs(count));
+  return result.join(delimiter);
 };
 
 const errorHandling = function({ option, count }) {
@@ -77,6 +62,7 @@ const addHeader = function(inputFiles, file, result) {
 
 const runCommand = function(userInput, opeartion, fs, commandType, file) {
   let { option, count, inputFiles } = userInput;
+  let delimiter = {n:'\n' , c:''};
   const { existsSync } = fs;
   let missingFile = missingFileError(existsSync, file, commandType);
   if (missingFile) {
@@ -84,40 +70,38 @@ const runCommand = function(userInput, opeartion, fs, commandType, file) {
   }
   let fileHeader = getFileHeading(file);
   let content = fs.readFileSync(file, "utf8");
-  let result = opeartion[option](content, count);
+  let result = opeartion(content, count, delimiter[option]);
   return addHeader(inputFiles, fileHeader, result);
 };
 
 const head = function(userInput,fs) {
-  let opeartion = { n: getFirstNLines, c: getFirstNBytes };
   let error = errorHandling(userInput);
   if (error) {
     return error;
   }
-  let result = runCommand.bind(null, userInput, opeartion, fs, "h");
+  let result = runCommand.bind(null, userInput, fetchHeadContent, fs, "h");
   return userInput.inputFiles.map(result).join("\n");
 };
 
 const tail = function(userInput, fs) {
-  let operation = { n: getLastNLines, c: getLastNBytes };
   let error = errorHandlingTail(userInput);
   if (error) {
     return error;
   }
-  let result = runCommand.bind(null, userInput, operation, fs, "t");
+  let result = runCommand.bind(null, userInput, fetchTailContent, fs, "t");
   return userInput.inputFiles.map(result).join("\n");
 };
 
 module.exports = {
-  getFirstNLines,
-  getFirstNBytes,
+  fetchHeadContent,
+  // getFirstNBytes,
   errorHandling,
   isInvalidFile,
   missingFileError,
   head,
   getFileHeading,
-  getLastNLines,
-  getLastNBytes,
+  fetchTailContent,
+  fetchTailContent,
   tail,
   errorHandlingTail,
   runCommand

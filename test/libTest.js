@@ -1,7 +1,7 @@
 const assert = require('assert');
-const {getFirstNLines,getFirstNBytes,errorHandling,
-      head,errorHandlingTail,getLastNLines,
-      getLastNBytes,tail,getFileHeading} = require('../src/lib.js');
+const {fetchHeadContent,errorHandling,
+      head,errorHandlingTail,
+      fetchTailContent,tail,getFileHeading} = require('../src/lib.js');
 
 const readFileSync  = function(string){
   return string;
@@ -15,21 +15,36 @@ const validater = function(file) {
 }
 const fs = {existsSync:validater,readFileSync:readFileSync};
 
-describe('getFirstNLines()',function(){
+describe('fetchHeadContent()',function(){
   it('shoud return the 10 lines by default',function(){
     let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
     let expectedOutput = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe'
-    assert.deepEqual(getFirstNLines(string,10),expectedOutput);
+    assert.deepEqual(fetchHeadContent(string,10,'\n'),expectedOutput);
   })
   it('shoud return 1 lines by givin input',function(){
     let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
     let expectedOutput = 'The '
-    assert.deepEqual(getFirstNLines(string,1),expectedOutput);
+    assert.deepEqual(fetchHeadContent(string,1,'\n'),expectedOutput);
   })
   it('shoud return the 4 lines in input 4',function(){
     let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
     let expectedOutput = 'The \ncoins \nentered\n circulation'
-    assert.deepEqual(getFirstNLines(string,4),expectedOutput);
+    assert.deepEqual(fetchHeadContent(string,4,'\n'),expectedOutput);
+  })
+  it('shoud return the 10 character for input10',function(){
+    let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
+    let expectedOutput = 'The \ncoins' 
+    assert.deepEqual(fetchHeadContent(string,10,''),expectedOutput);
+  })
+  it('shoud return  1 character for input 1',function(){
+    let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
+    let expectedOutput = 'T'
+    assert.deepEqual(fetchHeadContent(string,1,''),expectedOutput);
+  })
+  it('shoud return 2 character for input 2',function(){
+    let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
+    let expectedOutput = 'Th'
+    assert.deepEqual(fetchHeadContent(string,2,''),expectedOutput);
   })
 });
 
@@ -45,24 +60,6 @@ describe('getFileHeading()',function(){
     assert.deepEqual(getFileHeading(string),expectedOutput);
   })
 })
-
-describe('getFirstNBytes()',function(){
-  it('shoud return the 10 character for input10',function(){
-    let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
-    let expectedOutput = 'The \ncoins' 
-    assert.deepEqual(getFirstNBytes(string,10),expectedOutput);
-  })
-  it('shoud return  1 character for input 1',function(){
-    let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
-    let expectedOutput = 'T'
-    assert.deepEqual(getFirstNBytes(string,1),expectedOutput);
-  })
-  it('shoud return 2 character for input 2',function(){
-    let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
-    let expectedOutput = 'Th'
-    assert.deepEqual(getFirstNBytes(string,2),expectedOutput);
-  })
-});
 
 describe('head()', function() {
   it('should return the lines as per provided input', function() {
@@ -128,39 +125,36 @@ describe('errorHandling()', function() {
   });
 });
 
-describe('getLastNLines()',function(){
+describe('fetchTailContent()',function(){
   it('shoud return the 10 lines by default',function(){
     let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
     let expectedOutput = 'legal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
-    assert.deepEqual(getLastNLines(string,10),expectedOutput);
+    assert.deepEqual(fetchTailContent(string,10,'\n'),expectedOutput);
   })
   it('shoud return 1 lines by givin input',function(){
     let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
     let expectedOutput = 'in the coins'
-    assert.deepEqual(getLastNLines(string,1),expectedOutput);
+    assert.deepEqual(fetchTailContent(string,1,'\n'),expectedOutput);
   })
   it('shoud return the 4 lines in input 4',function(){
     let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
     let expectedOutput = ' were\nCongress \ncalled \nin the coins'
-    assert.deepEqual(getLastNLines(string,4),expectedOutput);
+    assert.deepEqual(fetchTailContent(string,4,'\n'),expectedOutput);
   })
-});
-
-describe('getLastNBytes())',function(){
   it('shoud return the 10 character for input10',function(){
     let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
     let expectedOutput = ' the coins' 
-    assert.deepEqual(getLastNBytes(string,10),expectedOutput);
+    assert.deepEqual(fetchTailContent(string,10,''),expectedOutput);
   })
   it('shoud return  1 character for input 1',function(){
     let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
     let expectedOutput = 's'
-    assert.deepEqual(getLastNBytes(string,1),expectedOutput);
+    assert.deepEqual(fetchTailContent(string,1,''),expectedOutput);
   })
   it('shoud return 2 character for input 2',function(){
     let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
     let expectedOutput = 'ns'
-    assert.deepEqual(getLastNBytes(string,2),expectedOutput);
+    assert.deepEqual(fetchTailContent(string,2,''),expectedOutput);
   })
 });
 
