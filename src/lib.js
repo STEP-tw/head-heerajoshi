@@ -1,5 +1,5 @@
 const getFirstNLines = function(content, count) {
-  let result = content.split("\n").slice(0,count);
+  let result = content.split("\n").slice(0, count);
   return result.join("\n");
 };
 
@@ -8,22 +8,22 @@ const getFirstNBytes = function(content, character) {
   return result.join("");
 };
 
-const getLastNLines = function(content,count){
-  let totalLine = content.split('\n').length;
-  let start = totalLine - count ;
-  start = Math.max(0,start);
-  let result = content.split('\n').slice(start);
-  return  result.join('\n');
-}
+const getLastNLines = function(content, count) {
+  let totalLine = content.split("\n").length;
+  let start = totalLine - count;
+  start = Math.max(0, start);
+  let result = content.split("\n").slice(start);
+  return result.join("\n");
+};
 
-const getLastNBytes = function(content,count){
-  let totalLine = content.split('').length;
-  let start = totalLine - count ;
-  let result = content.split('').slice(start);
-  return  result.join('');
-}
+const getLastNBytes = function(content, count) {
+  let totalLine = content.split("").length;
+  let start = totalLine - count;
+  let result = content.split("").slice(start);
+  return result.join("");
+};
 
-const errorHandling = function({ option, count}) {
+const errorHandling = function({ option, count }) {
   if (option != "n" && option != "c") {
     return (
       "head: illegal option -- " +
@@ -41,11 +41,11 @@ const errorHandling = function({ option, count}) {
 };
 
 const isInvalidFile = function(validater, file) {
-  return !(validater(file));
+  return !validater(file);
 };
 
-const missingFileError = function(validater, file,command) {
-  let type={'h':'head','t':'tail'}
+const missingFileError = function(validater, file, command) {
+  let type = { h: "head", t: "tail" };
   let invalidfile = isInvalidFile(validater, file);
   if (invalidfile) {
     return type[command] + ": " + file + ": No such file or directory";
@@ -53,7 +53,7 @@ const missingFileError = function(validater, file,command) {
 };
 
 const getFileHeading = function(file) {
-  return "==> " + file + " <==" ;
+  return "==> " + file + " <==";
 };
 
 const errorHandlingTail = function({ option, count }) {
@@ -68,28 +68,27 @@ const errorHandlingTail = function({ option, count }) {
   if (isNaN(count - 0)) {
     return "tail: illegal offset -- " + count;
   }
-}
+};
 
-const addHeader = function(inputFiles,file,result){
-if(inputFiles.length > 1){
-  return file +'\n'+ result ;
-}
-return result; 
-}
+const addHeader = function(inputFiles, file, result) {
+  if (inputFiles.length > 1) {
+    return file + "\n" + result;
+  }
+  return result;
+};
 
-const runCommand = function(userInput,opeartion,fs,commandType,file){
-  let {option,count,inputFiles} = userInput;
-  const {existsSync} = fs;
-  let missingFile = missingFileError(existsSync, file,commandType);
-    if (missingFile) {
-      return missingFile;
-    }
+const runCommand = function(userInput, opeartion, fs, commandType, file) {
+  let { option, count, inputFiles } = userInput;
+  const { existsSync } = fs;
+  let missingFile = missingFileError(existsSync, file, commandType);
+  if (missingFile) {
+    return missingFile;
+  }
   let fileName = getFileHeading(file);
-  let content = fs.readFileSync(file,'utf8');
-  let result = opeartion[option](content,count);
-  return addHeader(inputFiles,fileName,result); 
-}
-
+  let content = fs.readFileSync(file, "utf8");
+  let result = opeartion[option](content, count);
+  return addHeader(inputFiles, fileName, result);
+};
 
 const head = function(fs, userInput) {
   let opeartion = { n: getFirstNLines, c: getFirstNBytes };
@@ -97,19 +96,19 @@ const head = function(fs, userInput) {
   if (error) {
     return error;
   }
-  let result = runCommand.bind(null,userInput,opeartion,fs,'h');
+  let result = runCommand.bind(null, userInput, opeartion, fs, "h");
   return userInput.inputFiles.map(result).join("\n");
 };
 
-const tail = function(userInput,fs){
-  let opeartion = { n: getLastNLines, c:getLastNBytes }
+const tail = function(userInput, fs) {
+  let operation = { n: getLastNLines, c: getLastNBytes };
   let error = errorHandlingTail(userInput);
   if (error) {
     return error;
   }
-  let result = runCommand.bind(null,userInput,opeartion,fs,'t');
-  return userInput.inputFiles.map(result).join('\n');
-}
+  let result = runCommand.bind(null, userInput, operation, fs, "t");
+  return userInput.inputFiles.map(result).join("\n");
+};
 
 module.exports = {
   getFirstNLines,
