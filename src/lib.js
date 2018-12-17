@@ -24,6 +24,7 @@ const getLastNBytes = function(content, count) {
 };
 
 const errorHandling = function({ option, count }) {
+  let type = { n: 'line' , c: 'byte' };
   if (option != "n" && option != "c") {
     return (
       "head: illegal option -- " +
@@ -33,10 +34,7 @@ const errorHandling = function({ option, count }) {
     );
   }
   if (isNaN(count) || count < 1) {
-    if (option == "n") {
-      return "head: illegal line count -- " + count;
-    }
-    return "head: illegal byte count -- " + count;
+    return 'head: illegal '+ type[option] +' count -- ' + count;
   }
 };
 
