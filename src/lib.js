@@ -84,10 +84,10 @@ const runCommand = function(userInput, opeartion, fs, commandType, file) {
   if (missingFile) {
     return missingFile;
   }
-  let fileName = getFileHeading(file);
+  let fileHeader = getFileHeading(file);
   let content = fs.readFileSync(file, "utf8");
   let result = opeartion[option](content, count);
-  return addHeader(inputFiles, fileName, result);
+  return addHeader(inputFiles, fileHeader, result);
 };
 
 const head = function(userInput,fs) {
