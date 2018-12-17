@@ -32,7 +32,7 @@ const errorHandling = function({ option, count }) {
       "usage: head [-n lines | -c bytes] [file ...]"
     );
   }
-  if (isNaN(count - 0) || count < 1) {
+  if (isNaN(count) || count < 1) {
     if (option == "n") {
       return "head: illegal line count -- " + count;
     }
