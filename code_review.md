@@ -1,6 +1,6 @@
 1. duplication in first two functions (1-9);
 2. -[x] parameter name in `getFirstNBytes` function(character);
-3. variable name `totalLine` (12)
+3. -[x] variable name `totalLine` (12)
 4. duplication in getLastNLines and getLastNBytes function(11-24);
 5. in 35 line `count-0` unnecessary;
 6. unnecessary consdition in 36 line;

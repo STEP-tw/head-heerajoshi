@@ -9,8 +9,8 @@ const getFirstNBytes = function(content, count) {
 };
 
 const getLastNLines = function(content, count) {
-  let totalLine = content.split("\n").length;
-  let start = totalLine - count;
+  let totalNumOfLine = content.split("\n").length;
+  let start = totalNumOfLine - count;
   start = Math.max(0, start);
   let result = content.split("\n").slice(start);
   return result.join("\n");
