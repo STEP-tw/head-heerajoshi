@@ -1,10 +1,9 @@
-const fs = require('fs');
-const {tail} = require('./src/lib.js');
-const {inputSeparator} = require('./src/utilLib.js')
-let userArg = process.argv.slice(2);
-const main = function(){
-let inputs = inputSeparator(userArg);
-console.log(tail(inputs,fs))
-}
+const fs = require("fs");
+const { tail } = require("./src/lib.js");
+const { inputSeparator } = require("./src/utilLib.js");
+const main = function() {
+  let userArg = inputSeparator(process.argv.slice(2));
+  console.log(tail(userArg, fs));
+};
 
 main();

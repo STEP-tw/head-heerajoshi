@@ -13,7 +13,7 @@ const validater = function(file) {
 }
 const fs = {existsSync:validater,readFileSync:readFileSync};
 
-describe('getLines()',function(){
+describe('getFirstNLines()',function(){
   it('shoud return the 10 lines by default',function(){
     let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
     let expectedOutput = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe'
@@ -44,7 +44,7 @@ describe('getFileHeading()',function(){
   })
 })
 
-describe('getCharacter()',function(){
+describe('getFirstNBytes()',function(){
   it('shoud return the 10 character for input10',function(){
     let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
     let expectedOutput = 'The \ncoins' 
@@ -126,7 +126,7 @@ describe('errorHandling()', function() {
   });
 });
 
-describe('getLinesTail()',function(){
+describe('getLastNLines()',function(){
   it('shoud return the 10 lines by default',function(){
     let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
     let expectedOutput = 'legal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
@@ -144,7 +144,7 @@ describe('getLinesTail()',function(){
   })
 });
 
-describe('getCharacterTail())',function(){
+describe('getLastNBytes())',function(){
   it('shoud return the 10 character for input10',function(){
     let string = 'The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins'
     let expectedOutput = ' the coins' 

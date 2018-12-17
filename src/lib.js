@@ -56,7 +56,7 @@ const getFileHeading = function(file) {
   return "==> " + file + " <==" ;
 };
 
-const errorHandlingTail = function({ option, count}) {
+const errorHandlingTail = function({ option, count }) {
   if (option != "n" && option != "c") {
     return (
       "tail: illegal option -- " +
@@ -102,7 +102,7 @@ const head = function(fs, userInput) {
 };
 
 const tail = function(userInput,fs){
-  let opeartion = {n: getLastNLines,c:getLastNBytes}
+  let opeartion = { n: getLastNLines, c:getLastNBytes }
   let error = errorHandlingTail(userInput);
   if (error) {
     return error;
