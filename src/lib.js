@@ -3,8 +3,8 @@ const getFirstNLines = function(content, count) {
   return result.join("\n");
 };
 
-const getFirstNBytes = function(content, character) {
-  let result = content.split("").slice(0, character);
+const getFirstNBytes = function(content, count) {
+  let result = content.split("").slice(0, count);
   return result.join("");
 };
 
@@ -90,7 +90,7 @@ const runCommand = function(userInput, opeartion, fs, commandType, file) {
   return addHeader(inputFiles, fileName, result);
 };
 
-const head = function(fs, userInput) {
+const head = function(userInput,fs) {
   let opeartion = { n: getFirstNLines, c: getFirstNBytes };
   let error = errorHandling(userInput);
   if (error) {

@@ -66,32 +66,32 @@ describe('head()', function() {
   it('should return the lines as per provided input', function() {
     let file = 'one\ntwo\nthree\nfour';
     let parameters = {option:'n',count:'3',inputFiles:[file]}
-    assert.deepEqual(head(fs,parameters),'one\ntwo\nthree');
+    assert.deepEqual(head(parameters,fs),'one\ntwo\nthree');
   });
   it('should return the hole file when count is more than the line of the input file', function() {
     let file = 'one\ntwo\nthree\nfour';
     let parameters = {option:'n',count:'30',inputFiles:[file]}
-    assert.deepEqual(head(fs,parameters),'one\ntwo\nthree\nfour');
+    assert.deepEqual(head(parameters,fs),'one\ntwo\nthree\nfour');
   });
   it('should return the characters as per provided input', function() {
     let file = 'one\ntwo\nthree\nfour';
     let parameters = {option:'c',count:'2',inputFiles: [file]}
-    assert.deepEqual(head(fs,parameters),'on');
+    assert.deepEqual(head(parameters,fs),'on');
   });
   it('should return error massage for wrong count', function() {
     let file = 'one\ntwo\nthree\nfour';
     let parameters = {option:'c',count:'7f',inputFiles: [file]}
-    assert.deepEqual(head(fs,parameters),'head: illegal byte count -- 7f');
+    assert.deepEqual(head(parameters,fs),'head: illegal byte count -- 7f');
   });
   it('should return error massage for 0 count', function() {
     let file = 'one\ntwo\nthree\nfour';
     let parameters = {option:'c',count:'0',inputFiles: [file]}
-    assert.deepEqual(head(fs,parameters),'head: illegal byte count -- 0');
+    assert.deepEqual(head(parameters,fs),'head: illegal byte count -- 0');
   });
   it('should return usage massage for wrong option', function() {
     let file = 'one\ntwo\nthree\nfour';
     let parameters = {option:'g',count:'7',inputFiles: [file]}
-    assert.deepEqual(head(fs,parameters),'head: illegal option -- g\nusage: head [-n lines | -c bytes] [file ...]');
+    assert.deepEqual(head(parameters,fs),'head: illegal option -- g\nusage: head [-n lines | -c bytes] [file ...]');
   });
 
   
@@ -100,7 +100,7 @@ describe('head()', function() {
     let file1 = 'not exists';
     let parameters = {option:'n',count:'2',inputFiles:[file,file1]}
     let expectedOutput = '==> one\ntwo\nthree <==\none\ntwo\nhead: not exists: No such file or directory'
-    assert.deepEqual(head(fs,parameters),expectedOutput);
+    assert.deepEqual(head(parameters,fs),expectedOutput);
   });
 });
 
