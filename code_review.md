@@ -6,5 +6,5 @@
 6. -[x] unnecessary consdition in 36 line;
 7. -[x] poor variable name in 87;
 8. -[x] order of arguemnets in 93.
-9.  duplication in head and tail functions;
+9. -[ ] duplication in head and tail functions;
 10. -[x] long lines in libtest.js
