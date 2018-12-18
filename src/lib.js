@@ -3,13 +3,13 @@ const fetchHeadContent = function(content, count, delimiter) {
   return result.join(delimiter);
 };
 
-const fetchTailContent = function(content, count,delimiter) {
+const fetchTailContent = function(content, count, delimiter) {
   let result = content.split(delimiter).slice(-Math.abs(count));
   return result.join(delimiter);
 };
 
 const errorHandling = function({ option, count }) {
-  let type = { n: 'line' , c: 'byte' };
+  let type = { n: "line", c: "byte" };
   if (option != "n" && option != "c") {
     return (
       "head: illegal option -- " +
@@ -19,7 +19,7 @@ const errorHandling = function({ option, count }) {
     );
   }
   if (isNaN(count) || count < 1) {
-    return 'head: illegal '+ type[option] +' count -- ' + count;
+    return "head: illegal " + type[option] + " count -- " + count;
   }
 };
 
@@ -62,7 +62,7 @@ const addHeader = function(inputFiles, file, result) {
 
 const runCommand = function(userInput, opeartion, fs, commandType, file) {
   let { option, count, inputFiles } = userInput;
-  let delimiter = {n:'\n' , c:''};
+  let delimiter = { n: "\n", c: "" };
   const { existsSync } = fs;
   let missingFile = missingFileError(existsSync, file, commandType);
   if (missingFile) {
@@ -74,7 +74,7 @@ const runCommand = function(userInput, opeartion, fs, commandType, file) {
   return addHeader(inputFiles, fileHeader, result);
 };
 
-const head = function(userInput,fs) {
+const head = function(userInput, fs) {
   let error = errorHandling(userInput);
   if (error) {
     return error;
@@ -94,7 +94,6 @@ const tail = function(userInput, fs) {
 
 module.exports = {
   fetchHeadContent,
-  // getFirstNBytes,
   errorHandling,
   isInvalidFile,
   missingFileError,
