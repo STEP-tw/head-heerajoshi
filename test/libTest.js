@@ -113,6 +113,13 @@ describe("head()", function() {
       "==> numberFile <==\none\ntwo\nhead: not exists: No such file or directory";
     assert.deepEqual(head(parameters, fs), expectedOutput);
   });
+  it("should return the lines of each file for more than one file", function() {
+    let file1 = "not exists";
+    let parameters = { option: "n", count: "2", inputFiles: ['numberFile', 'stringFile'] };
+    let expectedOutput =
+      "==> numberFile <==\none\ntwo\n==> stringFile <==\nThe \ncoins ";
+    assert.deepEqual(head(parameters, fs), expectedOutput);
+  });
 });
 
 describe("errorHandling()", function() {
