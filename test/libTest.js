@@ -236,6 +236,11 @@ describe("tail()", function() {
     let parameters = { option: "n", count: "7r", inputFiles: ['numberFile'] };
     assert.deepEqual(tail(parameters, fs), "tail: illegal offset -- 7r");
   });
+ 
+  it("should return error massage for wrong count of character", function() {
+    let parameters = { option: "c", count: "7r", inputFiles: ['numberFile'] };
+    assert.deepEqual(tail(parameters, fs), "tail: illegal offset -- 7r");
+  });
 
   it("should return full file when count is more than the the total no of line", function() {
     let parameters = { option: "n", count: "40", inputFiles: ['numberFile'] };
