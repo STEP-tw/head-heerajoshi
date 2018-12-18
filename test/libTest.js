@@ -9,9 +9,12 @@ const {
   getFileHeading
 } = require("../src/lib.js");
 
-const readFileSync = function(string) {
-  return string;
-};
+const fileContents = {
+  numberFile : "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven" ,
+  stringFile : "The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins"
+} 
+
+const readFileSync = file => fileContents[file];
 
 const validater = function(file) {
   if (file == "not exists") {
@@ -76,33 +79,27 @@ describe("getFileHeading()", function() {
 
 describe("head()", function() {
   it("should return the lines as per provided input", function() {
-    let file = "one\ntwo\nthree\nfour";
-    let parameters = { option: "n", count: "3", inputFiles: [file] };
+    let parameters = { option: "n", count: "3", inputFiles: ['numberFile'] };
     assert.deepEqual(head(parameters, fs), "one\ntwo\nthree");
   });
   it("should return the hole file when count is more than the line of the input file", function() {
-    let file = "one\ntwo\nthree\nfour";
-    let parameters = { option: "n", count: "30", inputFiles: [file] };
-    assert.deepEqual(head(parameters, fs), "one\ntwo\nthree\nfour");
+    let parameters = { option: "n", count: "30", inputFiles: ['numberFile'] };
+    assert.deepEqual(head(parameters, fs), "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven")
   });
   it("should return the characters as per provided input", function() {
-    let file = "one\ntwo\nthree\nfour";
-    let parameters = { option: "c", count: "2", inputFiles: [file] };
+    let parameters = { option: "c", count: "2", inputFiles: ['numberFile'] };
     assert.deepEqual(head(parameters, fs), "on");
   });
   it("should return error massage for wrong count", function() {
-    let file = "one\ntwo\nthree\nfour";
-    let parameters = { option: "c", count: "7f", inputFiles: [file] };
+    let parameters = { option: "c", count: "7f", inputFiles: ['numberFile'] };
     assert.deepEqual(head(parameters, fs), "head: illegal byte count -- 7f");
   });
   it("should return error massage for 0 count", function() {
-    let file = "one\ntwo\nthree\nfour";
-    let parameters = { option: "c", count: "0", inputFiles: [file] };
+    let parameters = { option: "c", count: "0", inputFiles: ['numberFile'] };
     assert.deepEqual(head(parameters, fs), "head: illegal byte count -- 0");
   });
   it("should return usage massage for wrong option", function() {
-    let file = "one\ntwo\nthree\nfour";
-    let parameters = { option: "g", count: "7", inputFiles: [file] };
+    let parameters = { option: "g", count: "7", inputFiles: ['numberFile'] };
     assert.deepEqual(
       head(parameters, fs),
       "head: illegal option -- g\nusage: head [-n lines | -c bytes] [file ...]"
@@ -110,18 +107,17 @@ describe("head()", function() {
   });
 
   it("should return the lines for file which exists and error for file which doesn't exists", function() {
-    let file = "one\ntwo\nthree";
     let file1 = "not exists";
-    let parameters = { option: "n", count: "2", inputFiles: [file, file1] };
+    let parameters = { option: "n", count: "2", inputFiles: ['numberFile', file1] };
     let expectedOutput =
-      "==> one\ntwo\nthree <==\none\ntwo\nhead: not exists: No such file or directory";
+      "==> numberFile <==\none\ntwo\nhead: not exists: No such file or directory";
     assert.deepEqual(head(parameters, fs), expectedOutput);
   });
 });
 
 describe("errorHandling()", function() {
   it("should return the error massage if input have any other option", function() {
-    let file = "one\ntwo\nthree";
+    let file = "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "v", count: "3", inputFiles: [file] };
     assert.deepEqual(
       errorHandling(parameters),
@@ -133,7 +129,7 @@ describe("errorHandling()", function() {
   });
 
   it("should return illegal line error massage for invalid lines", function() {
-    let file = "one\ntwo\nthree";
+    let file = "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "n", count: "0", inputFiles: [file] };
     assert.deepEqual(
       errorHandling(parameters),
@@ -142,7 +138,7 @@ describe("errorHandling()", function() {
   });
 
   it("should return illegal byte error massage for invalid bytes", function() {
-    let file = "one\ntwo\nthree";
+    let file = "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "c", count: "x", inputFiles: [file] };
     assert.deepEqual(
       errorHandling(parameters),
@@ -193,7 +189,7 @@ describe("fetchTailContent()", function() {
 
 describe("errorHandlingTail()", function() {
   it("should return the error massage if input have any other option", function() {
-    let file = "one\ntwo\nthree";
+    let file = "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "v", count: "3", inputFiles: [file] };
     assert.deepEqual(
       errorHandlingTail(parameters),
@@ -204,7 +200,7 @@ describe("errorHandlingTail()", function() {
     );
   });
   it("should return illegal line error massage for invalid lines", function() {
-    let file = "one\ntwo\nthree";
+    let file = "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "n", count: "5r", inputFiles: [file] };
     assert.deepEqual(
       errorHandlingTail(parameters),
@@ -213,7 +209,7 @@ describe("errorHandlingTail()", function() {
   });
 
   it("should return illegal byte error massage for invalid bytes", function() {
-    let file = "one\ntwo\nthree";
+    let file = "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "c", count: "5r", inputFiles: [file] };
     assert.deepEqual(
       errorHandlingTail(parameters),
@@ -224,14 +220,12 @@ describe("errorHandlingTail()", function() {
 
 describe("tail()", function() {
   it("should return the lines as per provided input", function() {
-    let file = "one\ntwo\nthree\nfour";
-    let parameters = { option: "n", count: "3", inputFiles: [file] };
-    assert.deepEqual(tail(parameters, fs), "two\nthree\nfour");
+    let parameters = { option: "n", count: "3", inputFiles: ['numberFile'] };
+    assert.deepEqual(tail(parameters, fs),"nine\nten\neleven"); 
   });
 
   it("should return usage massage for wrong option", function() {
-    let file = "one\ntwo\nthree\nfour";
-    let parameters = { option: "g", count: "7", inputFiles: [file] };
+    let parameters = { option: "g", count: "7", inputFiles: ['numberFile'] };
     assert.deepEqual(
       tail(parameters, fs),
       "tail: illegal option -- g\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
@@ -239,29 +233,25 @@ describe("tail()", function() {
   });
 
   it("should return error massage for wrong count", function() {
-    let file = "one\ntwo\nthree\nfour";
-    let parameters = { option: "n", count: "7r", inputFiles: [file] };
+    let parameters = { option: "n", count: "7r", inputFiles: ['numberFile'] };
     assert.deepEqual(tail(parameters, fs), "tail: illegal offset -- 7r");
   });
 
   it("should return full file when count is more than the the total no of line", function() {
-    let file = "one\ntwo\nthree\nfour";
-    let parameters = { option: "n", count: "40", inputFiles: [file] };
-    assert.deepEqual(tail(parameters, fs), "one\ntwo\nthree\nfour");
+    let parameters = { option: "n", count: "40", inputFiles: ['numberFile'] };
+    assert.deepEqual(tail(parameters, fs), "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven");
   });
 
   it("should return the characters as per provided input", function() {
-    let file = "one\ntwo\nthree\nfour";
-    let parameters = { option: "c", count: "2", inputFiles: [file] };
-    assert.deepEqual(tail(parameters, fs), "ur");
+    let parameters = { option: "c", count: "2", inputFiles: ['numberFile'] };
+    assert.deepEqual(tail(parameters, fs), "en");
   });
 
   it("should return the lines for file which exists and error for file which doesn't exists", function() {
-    let file = "one\ntwo\nthree";
     let file1 = "not exists";
-    let parameters = { option: "n", count: "2", inputFiles: [file, file1] };
+    let parameters = { option: "n", count: "2", inputFiles: ['numberFile' , file1] };
     let expectedOutput =
-      "==> one\ntwo\nthree <==\ntwo\nthree\ntail: not exists: No such file or directory";
+      "==> numberFile <==\nten\neleven\ntail: not exists: No such file or directory";
     assert.deepEqual(tail(parameters, fs), expectedOutput);
   });
 });
