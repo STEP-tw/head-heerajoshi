@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { inputSeparator } = require("../src/util.js");
+const { inputSeparator } = require("../src/input.js");
 
 describe("inputSeparator", function() {
   it("should return parameter object when line/byte and lines is provided combine", function() {
