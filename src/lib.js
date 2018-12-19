@@ -1,12 +1,25 @@
-const {handleHeadError, handleTailError,
-       isInvalidFile, missingFileError} = require('./error.js')
+const {
+  handleHeadError,
+  handleTailError,
+  isInvalidFile,
+  missingFileError
+} = require("./error.js");
 
 const fetchHeadContent = function(content, count, delimiter) {
-  return content.split(delimiter).slice(0, count).join(delimiter);
+  return content
+    .split(delimiter)
+    .slice(0, count)
+    .join(delimiter);
 };
 
 const fetchTailContent = function(content, count, delimiter) {
-  return content.split(delimiter).slice(-Math.abs(count)).join(delimiter);
+  let totalNumOfLine = content.split(delimiter).length;
+  let start = totalNumOfLine - count;
+  start = Math.max(0, start);
+  return content
+    .split(delimiter)
+    .slice(start)
+    .join(delimiter);
 };
 
 const getFileHeading = function(file) {
