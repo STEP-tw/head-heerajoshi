@@ -15,9 +15,14 @@ const wrongOptionMessageTail = function(option) {
     "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
   );
 };
+
+const isWrongOption = function(option) {
+  return option != "n" && option != "c";
+};
+
 const handleHeadError = function({ option, count }) {
   let type = { n: "line", c: "byte" };
-  if (option != "n" && option != "c") {
+  if (isWrongOption) {
     return wrongOptionMessageHead(option);
   }
   if (isNaN(count) || count < 1) {
@@ -26,7 +31,7 @@ const handleHeadError = function({ option, count }) {
 };
 
 const handleTailError = function({ option, count }) {
-  if (option != "n" && option != "c") {
+  if (isWrongOption) {
     return wrongOptionMessageTail(option);
   }
   if (isNaN(count - 0)) {
