@@ -7,6 +7,12 @@ describe("inputSeparator", function() {
     let expectedOutput = { option: "n", count: "5", inputFiles: ["file1"] };
     assert.deepEqual(actualInput, expectedOutput);
   });
+  
+  it("should return parameter object when line/byte and count is provided combine", function() {
+    let actualInput = inputSeparator(["-n-5", "file1"]);
+    let expectedOutput = { option: "n", count: "-5", inputFiles: ["file1"] };
+    assert.deepEqual(actualInput, expectedOutput);
+  });
 
   it("should return parameter object when only lines is provide", function() {
     let actualInput = inputSeparator(["-5", "file1"]);
