@@ -1,4 +1,4 @@
-const wrongOptionMassageHead = function(option) {
+const wrongOptionMessageHead = function(option) {
   return (
     "head: illegal option -- " +
     option +
@@ -7,7 +7,7 @@ const wrongOptionMassageHead = function(option) {
   );
 };
 
-const wrongOptionMassageTail = function(option) {
+const wrongOptionMessageTail = function(option) {
   return (
     "tail: illegal option -- " +
     option +
@@ -18,7 +18,7 @@ const wrongOptionMassageTail = function(option) {
 const handleHeadError = function({ option, count }) {
   let type = { n: "line", c: "byte" };
   if (option != "n" && option != "c") {
-    return wrongOptionMassageHead(option);
+    return wrongOptionMessageHead(option);
   }
   if (isNaN(count) || count < 1) {
     return "head: illegal " + type[option] + " count -- " + count;
@@ -27,7 +27,7 @@ const handleHeadError = function({ option, count }) {
 
 const handleTailError = function({ option, count }) {
   if (option != "n" && option != "c") {
-    return wrongOptionMassageTail(option);
+    return wrongOptionMessageTail(option);
   }
   if (isNaN(count - 0)) {
     return "tail: illegal offset -- " + count;
