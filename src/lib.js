@@ -33,7 +33,7 @@ const addHeader = function(inputFiles, file, result) {
   return result;
 };
 
-const runCommand = function(userInput, opeartion, fs, commandType, file) {
+const runCommand = function(userInput, operation, fs, commandType, file) {
   const { option, count, inputFiles } = userInput;
   const delimiter = { lines: "\n", bytes: "" };
   const { existsSync } = fs;
@@ -43,7 +43,7 @@ const runCommand = function(userInput, opeartion, fs, commandType, file) {
   }
   let fileHeader = getFileHeading(file);
   let content = fs.readFileSync(file, "utf8");
-  let result = opeartion(content, count, delimiter[option]);
+  let result = operation(content, count, delimiter[option]);
   return addHeader(inputFiles, fileHeader, result);
 };
 
