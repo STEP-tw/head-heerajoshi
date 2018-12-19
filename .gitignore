@@ -2,4 +2,3 @@
 .nyc_output
 coverage
 *.swo
-node_modules
