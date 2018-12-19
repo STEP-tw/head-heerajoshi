@@ -7,6 +7,14 @@ const wrongOptionMassageHead = function(option) {
   );
 };
 
+const wrongOptionMassageTail = function(option) {
+  return (
+    "tail: illegal option -- " +
+    option +
+    "\n" +
+    "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
+  );
+};
 const errorHandlingHead = function({ option, count }) {
   let type = { n: "line", c: "byte" };
   if (option != "n" && option != "c") {
@@ -19,12 +27,7 @@ const errorHandlingHead = function({ option, count }) {
 
 const errorHandlingTail = function({ option, count }) {
   if (option != "n" && option != "c") {
-    return (
-      "tail: illegal option -- " +
-      option +
-      "\n" +
-      "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
-    );
+    return wrongOptionMassageTail(option);
   }
   if (isNaN(count - 0)) {
     return "tail: illegal offset -- " + count;
