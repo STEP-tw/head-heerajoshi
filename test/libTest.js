@@ -81,34 +81,34 @@ describe("getFileHeading()", function() {
 
 describe("head()", function() {
   it("should handle default arguments for a single file", function() {
-    let args = { option: "lines", count: "3", inputFiles: ["numberFile"] };
+    let args = { option: "lines", count: "3", files: ["numberFile"] };
     assert.deepEqual(head(args, fs), "one\ntwo\nthree");
   });
   it("should return the lines as per provided input", function() {
-    let args = { option: "lines", count: "3", inputFiles: ["numberFile"] };
+    let args = { option: "lines", count: "3", files: ["numberFile"] };
     assert.deepEqual(head(args, fs), "one\ntwo\nthree");
   });
   it("should return the whole file when count is more than the line of the input file", function() {
-    let args = { option: "lines", count: "30", inputFiles: ["numberFile"] };
+    let args = { option: "lines", count: "30", files: ["numberFile"] };
     assert.deepEqual(
       head(args, fs),
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven"
     );
   });
   it("should return the characters as per provided input", function() {
-    let args = { option: 'bytes', count: "2", inputFiles: ["numberFile"] };
+    let args = { option: 'bytes', count: "2", files: ["numberFile"] };
     assert.deepEqual(head(args, fs), "on");
   });
   it("should return error message for wrong count", function() {
-    let args = { option: 'bytes', count: "7f", inputFiles: ["numberFile"] };
+    let args = { option: 'bytes', count: "7f", files: ["numberFile"] };
     assert.deepEqual(head(args, fs), "head: illegal byte count -- 7f");
   });
   it("should treat 0 as an illegal line count", function() {
-    let args = { option: 'bytes', count: "0", inputFiles: ["numberFile"] };
+    let args = { option: 'bytes', count: "0", files: ["numberFile"] };
     assert.deepEqual(head(args, fs), "head: illegal byte count -- 0");
   });
   it("should return usage message for wrong option", function() {
-    let args = { option: "g", count: "7", inputFiles: ["numberFile"] };
+    let args = { option: "g", count: "7", files: ["numberFile"] };
     assert.deepEqual(
       head(args, fs),
       "head: illegal option -- g\nusage: head [-n lines | -c bytes] [file ...]"
@@ -120,7 +120,7 @@ describe("head()", function() {
     let args = {
       option: "lines",
       count: "2",
-      inputFiles: ["numberFile", file1]
+      files: ["numberFile", file1]
     };
     let expectedOutput =
       "==> numberFile <==\none\ntwo\nhead: not exists: No such file or directory";
@@ -130,7 +130,7 @@ describe("head()", function() {
     let args = {
       option: "lines",
       count: "2",
-      inputFiles: ["numberFile", "randomFile"]
+      files: ["numberFile", "randomFile"]
     };
     let expectedOutput =
       "==> numberFile <==\none\ntwo\n==> randomFile <==\nThe \ncoins ";
@@ -142,7 +142,7 @@ describe("handleHeadError()", function() {
   it("should return the error message if input have any other option", function() {
     let file =
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
-    let args = { option: "v", count: "3", inputFiles: [file] };
+    let args = { option: "v", count: "3", files: [file] };
     assert.deepEqual(
       handleHeadError(args),
       "head: illegal option -- " +
@@ -155,7 +155,7 @@ describe("handleHeadError()", function() {
   it("should return illegal line error message for invalid lines", function() {
     let file =
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
-    let args = { option: "lines", count: "0", inputFiles: [file] };
+    let args = { option: "lines", count: "0", files: [file] };
     assert.deepEqual(
       handleHeadError(args),
       "head: illegal line count -- " + 0
@@ -165,7 +165,7 @@ describe("handleHeadError()", function() {
   it("should return illegal byte error message for invalid bytes", function() {
     let file =
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
-    let args = { option: 'bytes', count: "x", inputFiles: [file] };
+    let args = { option: 'bytes', count: "x", files: [file] };
     assert.deepEqual(
       handleHeadError(args),
       "head: illegal byte count -- " + "x"
@@ -217,7 +217,7 @@ describe("handleTailError()", function() {
   it("should return the error message if input have any other option", function() {
     let file =
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
-    let args = { option: "v", count: "3", inputFiles: [file] };
+    let args = { option: "v", count: "3", files: [file] };
     assert.deepEqual(
       handleTailError(args),
       "tail: illegal option -- " +
@@ -229,7 +229,7 @@ describe("handleTailError()", function() {
   it("should return illegal line error message for invalid lines", function() {
     let file =
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
-    let args = { option: "lines", count: "5r", inputFiles: [file] };
+    let args = { option: "lines", count: "5r", files: [file] };
     assert.deepEqual(
       handleTailError(args),
       "tail: illegal offset -- " + "5r"
@@ -239,7 +239,7 @@ describe("handleTailError()", function() {
   it("should return illegal byte error message for invalid bytes", function() {
     let file =
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
-    let args = { option: 'bytes', count: "5r", inputFiles: [file] };
+    let args = { option: 'bytes', count: "5r", files: [file] };
     assert.deepEqual(
       handleTailError(args),
       "tail: illegal offset -- " + "5r"
@@ -249,12 +249,12 @@ describe("handleTailError()", function() {
 
 describe("tail()", function() {
   it("should return the lines as per provided input", function() {
-    let args = { option: "lines", count: "3", inputFiles: ["numberFile"] };
+    let args = { option: "lines", count: "3", files: ["numberFile"] };
     assert.deepEqual(tail(args, fs), "nine\nten\neleven");
   });
 
   it("should return usage message for wrong option", function() {
-    let args = { option: "g", count: "7", inputFiles: ["numberFile"] };
+    let args = { option: "g", count: "7", files: ["numberFile"] };
     assert.deepEqual(
       tail(args, fs),
       "tail: illegal option -- g\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
@@ -262,17 +262,17 @@ describe("tail()", function() {
   });
 
   it("should return error message for wrong count", function() {
-    let args = { option: "lines", count: "7r", inputFiles: ["numberFile"] };
+    let args = { option: "lines", count: "7r", files: ["numberFile"] };
     assert.deepEqual(tail(args, fs), "tail: illegal offset -- 7r");
   });
 
   it("should return error message for wrong count of character", function() {
-    let args = { option: 'bytes', count: "7r", inputFiles: ["numberFile"] };
+    let args = { option: 'bytes', count: "7r", files: ["numberFile"] };
     assert.deepEqual(tail(args, fs), "tail: illegal offset -- 7r");
   });
 
   it("should return full file when count is more than the the total no of line", function() {
-    let args = { option: "lines", count: "40", inputFiles: ["numberFile"] };
+    let args = { option: "lines", count: "40", files: ["numberFile"] };
     assert.deepEqual(
       tail(args, fs),
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven"
@@ -280,7 +280,7 @@ describe("tail()", function() {
   });
 
   it("should return the characters as per provided input", function() {
-    let args = { option: 'bytes', count: "2", inputFiles: ["numberFile"] };
+    let args = { option: 'bytes', count: "2", files: ["numberFile"] };
     assert.deepEqual(tail(args, fs), "en");
   });
 
@@ -289,7 +289,7 @@ describe("tail()", function() {
     let args = {
       option: "lines",
       count: "2",
-      inputFiles: ["numberFile", file1]
+      files: ["numberFile", file1]
     };
     let expectedOutput =
       "==> numberFile <==\nten\neleven\ntail: not exists: No such file or directory";

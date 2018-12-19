@@ -26,15 +26,15 @@ const getFileHeading = function(file) {
   return "==> " + file + " <==";
 };
 
-const addHeader = function(inputFiles, file, result) {
-  if (inputFiles.length > 1) {
+const addHeader = function(files, file, result) {
+  if (files.length > 1) {
     return file + "\n" + result;
   }
   return result;
 };
 
 const runCommand = function(userInput, operation, fs, commandType, file) {
-  const { option, count, inputFiles } = userInput;
+  const { option, count, files } = userInput;
   const delimiter = { lines: "\n", bytes: "" };
   const { existsSync } = fs;
   let missingFile = missingFileError(existsSync, file, commandType);
@@ -44,7 +44,7 @@ const runCommand = function(userInput, operation, fs, commandType, file) {
   let fileHeader = getFileHeading(file);
   let content = fs.readFileSync(file, "utf8");
   let result = operation(content, count, delimiter[option]);
-  return addHeader(inputFiles, fileHeader, result);
+  return addHeader(files, fileHeader, result);
 };
 
 const head = function(userInput, fs) {
@@ -53,7 +53,7 @@ const head = function(userInput, fs) {
     return error;
   }
   let result = runCommand.bind(null, userInput, fetchHeadContent, fs, "head");
-  return userInput.inputFiles.map(result).join("\n");
+  return userInput.files.map(result).join("\n");
 };
 
 const tail = function(userInput, fs) {
@@ -62,7 +62,7 @@ const tail = function(userInput, fs) {
     return error;
   }
   let result = runCommand.bind(null, userInput, fetchTailContent, fs, "tail");
-  return userInput.inputFiles.map(result).join("\n");
+  return userInput.files.map(result).join("\n");
 };
 
 module.exports = {
