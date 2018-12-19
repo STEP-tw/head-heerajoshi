@@ -17,12 +17,12 @@ const wrongOptionMessageTail = function(option) {
 };
 
 const isWrongOption = function(option) {
-  return option != "n" && option != "c";
+  return (option != "n" && option != "c");
 };
 
 const handleHeadError = function({ option, count }) {
   let type = { n: "line", c: "byte" };
-  if (isWrongOption) {
+  if (isWrongOption(option)) {
     return wrongOptionMessageHead(option);
   }
   if (isNaN(count) || count < 1) {
@@ -31,7 +31,7 @@ const handleHeadError = function({ option, count }) {
 };
 
 const handleTailError = function({ option, count }) {
-  if (isWrongOption) {
+  if (isWrongOption(option)) {
     return wrongOptionMessageTail(option);
   }
   if (isNaN(count - 0)) {
