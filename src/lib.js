@@ -1,3 +1,5 @@
+const {errorHandling} = require('./error.js')
+
 const fetchHeadContent = function(content, count, delimiter) {
   let result = content.split(delimiter).slice(0, count);
   return result.join(delimiter);
@@ -6,21 +8,6 @@ const fetchHeadContent = function(content, count, delimiter) {
 const fetchTailContent = function(content, count, delimiter) {
   let result = content.split(delimiter).slice(-Math.abs(count));
   return result.join(delimiter);
-};
-
-const errorHandling = function({ option, count }) {
-  let type = { n: "line", c: "byte" };
-  if (option != "n" && option != "c") {
-    return (
-      "head: illegal option -- " +
-      option +
-      "\n" +
-      "usage: head [-n lines | -c bytes] [file ...]"
-    );
-  }
-  if (isNaN(count) || count < 1) {
-    return "head: illegal " + type[option] + " count -- " + count;
-  }
 };
 
 const isInvalidFile = function(validater, file) {
