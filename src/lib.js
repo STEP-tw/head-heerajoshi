@@ -35,7 +35,7 @@ const addHeader = function(inputFiles, file, result) {
 
 const runCommand = function(userInput, opeartion, fs, commandType, file) {
   const { option, count, inputFiles } = userInput;
-  const delimiter = { n: "\n", c: "" };
+  const delimiter = { lines: "\n", bytes: "" };
   const { existsSync } = fs;
   let missingFile = missingFileError(existsSync, file, commandType);
   if (missingFile) {

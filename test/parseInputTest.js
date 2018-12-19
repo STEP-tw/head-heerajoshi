@@ -2,47 +2,47 @@ const assert = require("assert");
 const { inputSeparator } = require("../src/parseInput.js");
 
 describe("inputSeparator", function() {
-  it("should return parameter object when line/byte and lines is provided combine", function() {
+  it("should return arguments object when line/byte and count is provided combine", function() {
     let actualInput = inputSeparator(["-n5", "file1"]);
-    let expectedOutput = { option: "n", count: "5", inputFiles: ["file1"] };
+    let expectedOutput = { option: "lines", count: "5", inputFiles: ["file1"] };
     assert.deepEqual(actualInput, expectedOutput);
   });
   
-  it("should return parameter object when line/byte and count is provided combine", function() {
+  it("should return arguments object when line/byte and count is provided combine", function() {
     let actualInput = inputSeparator(["-n-5", "file1"]);
-    let expectedOutput = { option: "n", count: "-5", inputFiles: ["file1"] };
+    let expectedOutput = { option: "lines", count: "-5", inputFiles: ["file1"] };
     assert.deepEqual(actualInput, expectedOutput);
   });
 
-  it("should return parameter object when only lines is provide", function() {
+  it("should return arguments object when only count is provide", function() {
     let actualInput = inputSeparator(["-5", "file1"]);
-    let expectedOutput = { option: "n", count: "5", inputFiles: ["file1"] };
+    let expectedOutput = { option: "lines", count: "5", inputFiles: ["file1"] };
     assert.deepEqual(actualInput, expectedOutput);
   });
 
-  it("should return parameter object when line/byte and lines is provided separately", function() {
+  it("should return arguments object when line/byte and count is provided separately", function() {
     let actualInput = inputSeparator(["-c", "3", "file1", "file2"]);
     let expectedOutput = {
-      option: "c",
+      option: "bytes",
       count: "3",
       inputFiles: ["file1", "file2"]
     };
     assert.deepEqual(actualInput, expectedOutput);
   });
 
-  it("should return parameter object when only inputs files are provided", function() {
+  it("should handle default arguments for multiple files ", function() {
     let actualInput = inputSeparator(["file1", "file2"]);
     let expectedOutput = {
-      option: "n",
+      option: "lines",
       count: "10",
       inputFiles: ["file1", "file2"]
     };
     assert.deepEqual(actualInput, expectedOutput);
   });
-  it("should return parameter object when only inputs file are provided", function() {
+  it("should handle default arguments for one file ", function() {
     let actualInput = inputSeparator(["file1"]);
     let expectedOutput = {
-      option: "n",
+      option: "lines",
       count: "10",
       inputFiles: ["file1"]
     };

@@ -1,15 +1,21 @@
+const optionType = function(option){
+  let optionValue = { "n": "lines", "c": "bytes" };
+  return optionValue[option] || option;
+}
+
 const inputSeparator = function(userInputs) {
   let separatedInputs = {
-    option: "n",
+    option: "lines",
     count: 10,
     inputFiles: userInputs.slice(0)
   };
+  let option = userInputs[0][1]
   if (
     userInputs[0].length >= 3 &&
     userInputs[0][0] == "-" &&
     isNaN(userInputs[0][1])
   ) {
-    separatedInputs.option = userInputs[0][1];
+    separatedInputs.option = optionType(option);
     separatedInputs.count = userInputs[0].slice(2);
     separatedInputs.inputFiles = userInputs.slice(1);
   }
@@ -22,7 +28,7 @@ const inputSeparator = function(userInputs) {
     isNaN(userInputs[0][1]) &&
     userInputs[0][0] == "-"
   ) {
-    separatedInputs.option = userInputs[0][1];
+    separatedInputs.option = optionType(option);
     separatedInputs.count = userInputs[1];
     separatedInputs.inputFiles = userInputs.slice(2);
   }
