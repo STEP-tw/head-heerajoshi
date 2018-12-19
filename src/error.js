@@ -27,5 +27,9 @@ const errorHandling = function({ option, count }) {
       return "tail: illegal offset -- " + count;
     }
   };
-  
-  module.exports = {errorHandling, errorHandlingTail};
+ 
+  const isInvalidFile = function(validater, file) {
+    return !validater(file);
+  };
+
+  module.exports = {errorHandling, errorHandlingTail,isInvalidFile};

@@ -1,4 +1,4 @@
-const {errorHandling, errorHandlingTail} = require('./error.js')
+const {errorHandling, errorHandlingTail, isInvalidFile} = require('./error.js')
 
 const fetchHeadContent = function(content, count, delimiter) {
   let result = content.split(delimiter).slice(0, count);
@@ -8,10 +8,6 @@ const fetchHeadContent = function(content, count, delimiter) {
 const fetchTailContent = function(content, count, delimiter) {
   let result = content.split(delimiter).slice(-Math.abs(count));
   return result.join(delimiter);
-};
-
-const isInvalidFile = function(validater, file) {
-  return !validater(file);
 };
 
 const missingFileError = function(validater, file, command) {
