@@ -52,7 +52,7 @@ const head = function(userInput, fs) {
   if (error) {
     return error;
   }
-  let result = runCommand.bind(null, userInput, fetchHeadContent, fs, "h");
+  let result = runCommand.bind(null, userInput, fetchHeadContent, fs, "head");
   return userInput.inputFiles.map(result).join("\n");
 };
 
@@ -61,7 +61,7 @@ const tail = function(userInput, fs) {
   if (error) {
     return error;
   }
-  let result = runCommand.bind(null, userInput, fetchTailContent, fs, "t");
+  let result = runCommand.bind(null, userInput, fetchTailContent, fs, "tail");
   return userInput.inputFiles.map(result).join("\n");
 };
 
