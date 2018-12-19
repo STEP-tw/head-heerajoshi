@@ -39,4 +39,15 @@ describe("inputSeparator", function() {
     };
     assert.deepEqual(actualInput, expectedOutput);
   });
+  it("should return parameter object when only inputs file are provided", function() {
+    let actualInput = inputSeparator(["file1"]);
+    let expectedOutput = {
+      option: "n",
+      count: "10",
+      inputFiles: ["file1"]
+    };
+    assert.deepEqual(actualInput, expectedOutput);
+  });
+
 });
+
