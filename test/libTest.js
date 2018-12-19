@@ -1,9 +1,9 @@
 const assert = require("assert");
 const {
   fetchHeadContent,
-  errorHandlingHead,
+  handleHeadError,
   head,
-  errorHandlingTail,
+  handleTailError,
   fetchTailContent,
   tail,
   getFileHeading
@@ -135,13 +135,13 @@ describe("head()", function() {
   });
 });
 
-describe("errorHandlingHead()", function() {
+describe("handleHeadError()", function() {
   it("should return the error massage if input have any other option", function() {
     let file =
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "v", count: "3", inputFiles: [file] };
     assert.deepEqual(
-      errorHandlingHead(parameters),
+      handleHeadError(parameters),
       "head: illegal option -- " +
         "v" +
         "\n" +
@@ -154,7 +154,7 @@ describe("errorHandlingHead()", function() {
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "n", count: "0", inputFiles: [file] };
     assert.deepEqual(
-      errorHandlingHead(parameters),
+      handleHeadError(parameters),
       "head: illegal line count -- " + 0
     );
   });
@@ -164,7 +164,7 @@ describe("errorHandlingHead()", function() {
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "c", count: "x", inputFiles: [file] };
     assert.deepEqual(
-      errorHandlingHead(parameters),
+      handleHeadError(parameters),
       "head: illegal byte count -- " + "x"
     );
   });
@@ -210,13 +210,13 @@ describe("fetchTailContent()", function() {
   });
 });
 
-describe("errorHandlingTail()", function() {
+describe("handleTailError()", function() {
   it("should return the error massage if input have any other option", function() {
     let file =
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "v", count: "3", inputFiles: [file] };
     assert.deepEqual(
-      errorHandlingTail(parameters),
+      handleTailError(parameters),
       "tail: illegal option -- " +
         "v" +
         "\n" +
@@ -228,7 +228,7 @@ describe("errorHandlingTail()", function() {
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "n", count: "5r", inputFiles: [file] };
     assert.deepEqual(
-      errorHandlingTail(parameters),
+      handleTailError(parameters),
       "tail: illegal offset -- " + "5r"
     );
   });
@@ -238,7 +238,7 @@ describe("errorHandlingTail()", function() {
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "c", count: "5r", inputFiles: [file] };
     assert.deepEqual(
-      errorHandlingTail(parameters),
+      handleTailError(parameters),
       "tail: illegal offset -- " + "5r"
     );
   });

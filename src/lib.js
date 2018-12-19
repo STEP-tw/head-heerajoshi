@@ -1,4 +1,4 @@
-const {errorHandlingHead, errorHandlingTail,
+const {handleHeadError, handleTailError,
        isInvalidFile, missingFileError} = require('./error.js')
 
 const fetchHeadContent = function(content, count, delimiter) {
@@ -35,7 +35,7 @@ const runCommand = function(userInput, opeartion, fs, commandType, file) {
 };
 
 const head = function(userInput, fs) {
-  let error = errorHandlingHead(userInput);
+  let error = handleHeadError(userInput);
   if (error) {
     return error;
   }
@@ -44,7 +44,7 @@ const head = function(userInput, fs) {
 };
 
 const tail = function(userInput, fs) {
-  let error = errorHandlingTail(userInput);
+  let error = handleTailError(userInput);
   if (error) {
     return error;
   }
@@ -54,7 +54,7 @@ const tail = function(userInput, fs) {
 
 module.exports = {
   fetchHeadContent,
-  errorHandlingHead,
+  handleHeadError,
   isInvalidFile,
   missingFileError,
   head,
@@ -62,6 +62,6 @@ module.exports = {
   fetchTailContent,
   fetchTailContent,
   tail,
-  errorHandlingTail,
+  handleTailError,
   runCommand
 };

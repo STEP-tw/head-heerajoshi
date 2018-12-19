@@ -15,7 +15,7 @@ const wrongOptionMassageTail = function(option) {
     "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
   );
 };
-const errorHandlingHead = function({ option, count }) {
+const handleHeadError = function({ option, count }) {
   let type = { n: "line", c: "byte" };
   if (option != "n" && option != "c") {
     return wrongOptionMassageHead(option);
@@ -25,7 +25,7 @@ const errorHandlingHead = function({ option, count }) {
   }
 };
 
-const errorHandlingTail = function({ option, count }) {
+const handleTailError = function({ option, count }) {
   if (option != "n" && option != "c") {
     return wrongOptionMassageTail(option);
   }
@@ -46,4 +46,4 @@ const missingFileError = function(validater, file, command) {
   }
 };
 
-module.exports = { errorHandlingHead, errorHandlingTail, missingFileError };
+module.exports = { handleHeadError, handleTailError, missingFileError };
