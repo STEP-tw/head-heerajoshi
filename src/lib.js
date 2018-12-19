@@ -1,4 +1,5 @@
-const {errorHandling, errorHandlingTail, isInvalidFile} = require('./error.js')
+const {errorHandling, errorHandlingTail,
+       isInvalidFile, missingFileError} = require('./error.js')
 
 const fetchHeadContent = function(content, count, delimiter) {
   let result = content.split(delimiter).slice(0, count);
@@ -8,14 +9,6 @@ const fetchHeadContent = function(content, count, delimiter) {
 const fetchTailContent = function(content, count, delimiter) {
   let result = content.split(delimiter).slice(-Math.abs(count));
   return result.join(delimiter);
-};
-
-const missingFileError = function(validater, file, command) {
-  let type = { h: "head", t: "tail" };
-  let invalidfile = isInvalidFile(validater, file);
-  if (invalidfile) {
-    return type[command] + ": " + file + ": No such file or directory";
-  }
 };
 
 const getFileHeading = function(file) {

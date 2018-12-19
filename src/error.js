@@ -32,4 +32,13 @@ const errorHandling = function({ option, count }) {
     return !validater(file);
   };
 
-  module.exports = {errorHandling, errorHandlingTail,isInvalidFile};
+  const missingFileError = function(validater, file, command) {
+    let type = { h: "head", t: "tail" };
+    let invalidfile = isInvalidFile(validater, file);
+    if (invalidfile) {
+      return type[command] + ": " + file + ": No such file or directory";
+    }
+  };
+
+  module.exports = {errorHandling, errorHandlingTail,
+                    missingFileError};
