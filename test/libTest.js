@@ -1,7 +1,7 @@
 const assert = require("assert");
 const {
   fetchHeadContent,
-  errorHandling,
+  errorHandlingHead,
   head,
   errorHandlingTail,
   fetchTailContent,
@@ -135,13 +135,13 @@ describe("head()", function() {
   });
 });
 
-describe("errorHandling()", function() {
+describe("errorHandlingHead()", function() {
   it("should return the error massage if input have any other option", function() {
     let file =
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "v", count: "3", inputFiles: [file] };
     assert.deepEqual(
-      errorHandling(parameters),
+      errorHandlingHead(parameters),
       "head: illegal option -- " +
         "v" +
         "\n" +
@@ -154,7 +154,7 @@ describe("errorHandling()", function() {
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "n", count: "0", inputFiles: [file] };
     assert.deepEqual(
-      errorHandling(parameters),
+      errorHandlingHead(parameters),
       "head: illegal line count -- " + 0
     );
   });
@@ -164,7 +164,7 @@ describe("errorHandling()", function() {
       "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
     let parameters = { option: "c", count: "x", inputFiles: [file] };
     assert.deepEqual(
-      errorHandling(parameters),
+      errorHandlingHead(parameters),
       "head: illegal byte count -- " + "x"
     );
   });
