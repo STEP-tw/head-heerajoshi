@@ -14,4 +14,18 @@ const errorHandling = function({ option, count }) {
   };
 
 
-  module.exports = {errorHandling};
+  const errorHandlingTail = function({ option, count }) {
+    if (option != "n" && option != "c") {
+      return (
+        "tail: illegal option -- " +
+        option +
+        "\n" +
+        "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
+      );
+    }
+    if (isNaN(count - 0)) {
+      return "tail: illegal offset -- " + count;
+    }
+  };
+  
+  module.exports = {errorHandling, errorHandlingTail};

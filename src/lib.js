@@ -1,4 +1,4 @@
-const {errorHandling} = require('./error.js')
+const {errorHandling, errorHandlingTail} = require('./error.js')
 
 const fetchHeadContent = function(content, count, delimiter) {
   let result = content.split(delimiter).slice(0, count);
@@ -24,20 +24,6 @@ const missingFileError = function(validater, file, command) {
 
 const getFileHeading = function(file) {
   return "==> " + file + " <==";
-};
-
-const errorHandlingTail = function({ option, count }) {
-  if (option != "n" && option != "c") {
-    return (
-      "tail: illegal option -- " +
-      option +
-      "\n" +
-      "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
-    );
-  }
-  if (isNaN(count - 0)) {
-    return "tail: illegal offset -- " + count;
-  }
 };
 
 const addHeader = function(inputFiles, file, result) {
