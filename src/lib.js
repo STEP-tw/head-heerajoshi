@@ -2,13 +2,11 @@ const {errorHandlingHead, errorHandlingTail,
        isInvalidFile, missingFileError} = require('./error.js')
 
 const fetchHeadContent = function(content, count, delimiter) {
-  let result = content.split(delimiter).slice(0, count);
-  return result.join(delimiter);
+  return content.split(delimiter).slice(0, count).join(delimiter);
 };
 
 const fetchTailContent = function(content, count, delimiter) {
-  let result = content.split(delimiter).slice(-Math.abs(count));
-  return result.join(delimiter);
+  return content.split(delimiter).slice(-Math.abs(count)).join(delimiter);
 };
 
 const getFileHeading = function(file) {
@@ -23,8 +21,8 @@ const addHeader = function(inputFiles, file, result) {
 };
 
 const runCommand = function(userInput, opeartion, fs, commandType, file) {
-  let { option, count, inputFiles } = userInput;
-  let delimiter = { n: "\n", c: "" };
+  const { option, count, inputFiles } = userInput;
+  const delimiter = { n: "\n", c: "" };
   const { existsSync } = fs;
   let missingFile = missingFileError(existsSync, file, commandType);
   if (missingFile) {
