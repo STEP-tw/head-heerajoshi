@@ -18,12 +18,13 @@ const fileContents = {
 
 const readFileSync = file => fileContents[file];
 
-const validater = function(file) {
-  if (file == "not exists") {
+const validater = function (file) {
+  if (fileContents[file] == undefined) {
     return false;
   }
   return true;
 };
+
 const fs = { existsSync: validater, readFileSync: readFileSync };
 
 describe("fetchHeadContent()", function() {
@@ -88,7 +89,7 @@ describe("head()", function() {
     let args = { option: "lines", count: "3", files: ["numberFile"] };
     assert.deepEqual(head(args, fs), "one\ntwo\nthree");
   });
-  it("should return the whole file when count is more than the line of the input file", function() {
+  it("should list the contents of the entire file if argument is greater than number of lines in file  ", function() {
     let args = { option: "lines", count: "30", files: ["numberFile"] };
     assert.deepEqual(
       head(args, fs),
@@ -99,7 +100,19 @@ describe("head()", function() {
     let args = { option: 'bytes', count: "2", files: ["numberFile"] };
     assert.deepEqual(head(args, fs), "on");
   });
-  it("should return error message for wrong count", function() {
+  it("should return the lines for file which exists and error for file which doesn't exists", function() {
+    let file1 = "not exists";
+     let args = {
+       option: "lines",
+       count: "2",
+       files: ["numberFile", file1]
+     };
+     let expectedOutput =
+       "==> numberFile <==\none\ntwo\nhead: not exists: No such file or directory";
+     assert.deepEqual(head(args, fs), expectedOutput);
+   });
+
+  it("should provide an error for invalid values for -c", function() {
     let args = { option: 'bytes', count: "7f", files: ["numberFile"] };
     assert.deepEqual(head(args, fs), "head: illegal byte count -- 7f");
   });
@@ -285,7 +298,7 @@ describe("tail()", function() {
   });
 
   it("should return the lines for file which exists and error for file which doesn't exists", function() {
-    let file1 = "not exists";
+   let file1 = "not exists";
     let args = {
       option: "lines",
       count: "2",
@@ -296,3 +309,4 @@ describe("tail()", function() {
     assert.deepEqual(tail(args, fs), expectedOutput);
   });
 });
+

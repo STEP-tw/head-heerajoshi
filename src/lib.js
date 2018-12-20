@@ -27,8 +27,9 @@ const getFileHeading = function(file) {
 };
 
 const addHeader = function(files, file, result) {
+  let fileHeader = getFileHeading(file);
   if (files.length > 1) {
-    return file + "\n" + result;
+    return fileHeader + "\n" + result;
   }
   return result;
 };
@@ -41,10 +42,9 @@ const runCommand = function(userInput, operation, fs, commandType, file) {
   if (missingFile) {
     return missingFile;
   }
-  let fileHeader = getFileHeading(file);
   let content = fs.readFileSync(file, "utf8");
   let result = operation(content, count, delimiter[option]);
-  return addHeader(files, fileHeader, result);
+  return addHeader(files, file, result);
 };
 
 const head = function(userInput, fs) {
