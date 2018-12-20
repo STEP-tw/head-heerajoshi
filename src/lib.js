@@ -34,6 +34,11 @@ const addHeader = function(files, file, result) {
   return result;
 };
 
+const handlers = {
+  head:{error:handleHeadError,fetch:fetchHeadContent},
+  tail:{error:handleTailError,fetch:fetchTailContent}
+}
+
 const runCommand = function(userInput, operation, fs, commandType, file) {
   const { option, count, files } = userInput;
   const delimiter = { lines: "\n", bytes: "" };
@@ -47,23 +52,18 @@ const runCommand = function(userInput, operation, fs, commandType, file) {
   return addHeader(files, file, result);
 };
 
-const head = function(userInput, fs) {
-  let error = handleHeadError(userInput);
+const createCommand = name => function(userInput, fs) {
+  let handler = handlers[name];
+  let error = handler.error(userInput);
   if (error) {
     return error;
   }
-  let result = runCommand.bind(null, userInput, fetchHeadContent, fs, "head");
+  let result = runCommand.bind(null, userInput, handler.fetch, fs, name);
   return userInput.files.map(result).join("\n");
 };
+const head = createCommand('head');
+const tail = createCommand('tail');
 
-const tail = function(userInput, fs) {
-  let error = handleTailError(userInput);
-  if (error) {
-    return error;
-  }
-  let result = runCommand.bind(null, userInput, fetchTailContent, fs, "tail");
-  return userInput.files.map(result).join("\n");
-};
 
 module.exports = {
   fetchHeadContent,

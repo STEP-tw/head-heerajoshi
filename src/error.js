@@ -19,7 +19,6 @@ const wrongOptionMessageTail = function(option) {
 const isWrongOption = function(option) {
   return (option != "lines" && option != "bytes");
 };
-
 const handleHeadError = function({ option, count }) {
   let type = { lines: "line", bytes: "byte" };
   if (isWrongOption(option)) {
