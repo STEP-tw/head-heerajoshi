@@ -186,39 +186,6 @@ describe("fetchTailContent()", function() {
   });
 });
 
-describe("handleTailError()", function() {
-  it("should return the error message if input have any other option", function() {
-    let file =
-      "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
-    let args = { option: "v", count: "3", files: [file] };
-    assert.equal(
-      handleTailError(args),
-      "tail: illegal option -- " +
-        "v" +
-        "\n" +
-        "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
-    );
-  });
-  it("should return illegal line error message for invalid lines", function() {
-    let file =
-      "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
-    let args = { option: "lines", count: "5r", files: [file] };
-    assert.equal(
-      handleTailError(args),
-      "tail: illegal offset -- " + "5r"
-    );
-  });
-
-  it("should return illegal byte error message for invalid bytes", function() {
-    let file =
-      "one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten\neleven";
-    let args = { option: 'bytes', count: "5r", files: [file] };
-    assert.equal(
-      handleTailError(args),
-      "tail: illegal offset -- " + "5r"
-    );
-  });
-});
 
 describe("tail()", function() {
   it("should return the lines as per provided input", function() {
