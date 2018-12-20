@@ -2,7 +2,6 @@ const assert = require("assert");
 const {
   fetchHeadContent,
   head,
-  handleTailError,
   fetchTailContent,
   tail,
   getFileHeading
@@ -68,9 +67,9 @@ describe("fetchHeadContent()", function() {
 
 describe("getFileHeading()", function() {
   it("should return file name with header", function() {
-    let string = "The";
+    let content = "The";
     let expectedOutput = "==> " + "The" + " <==";
-    assert.equal(getFileHeading(string), expectedOutput);
+    assert.equal(getFileHeading(content), expectedOutput);
   });
  
 });
@@ -148,41 +147,41 @@ describe("head()", function() {
 
 describe("fetchTailContent()", function() {
   it("should return the 10 lines by default", function() {
-    let string =
+    let content =
       "The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins";
     let expectedOutput =
       "legal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins";
-    assert.equal(fetchTailContent(string, 10, "\n"), expectedOutput);
+    assert.equal(fetchTailContent(content, 10, "\n"), expectedOutput);
   });
   it("should return 1 lines by givin input", function() {
-    let string =
+    let content =
       "The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins";
     let expectedOutput = "in the coins";
-    assert.equal(fetchTailContent(string, 1, "\n"), expectedOutput);
+    assert.equal(fetchTailContent(content, 1, "\n"), expectedOutput);
   });
   it("should return the 4 lines in input 4", function() {
-    let string =
+    let content =
       "The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins";
     let expectedOutput = " were\nCongress \ncalled \nin the coins";
-    assert.equal(fetchTailContent(string, 4, "\n"), expectedOutput);
+    assert.equal(fetchTailContent(content, 4, "\n"), expectedOutput);
   });
   it("should return the 10 character for input10", function() {
-    let string =
+    let content =
       "The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins";
     let expectedOutput = " the coins";
-    assert.equal(fetchTailContent(string, 10, ""), expectedOutput);
+    assert.equal(fetchTailContent(content, 10, ""), expectedOutput);
   });
   it("should return  1 character for input 1", function() {
-    let string =
+    let content =
       "The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins";
     let expectedOutput = "s";
-    assert.equal(fetchTailContent(string, 1, ""), expectedOutput);
+    assert.equal(fetchTailContent(content, 1, ""), expectedOutput);
   });
   it("should return 2 character for input 2", function() {
-    let string =
+    let content =
       "The \ncoins \nentered\n circulation\nAfter \nlegal\n maneuvering\nthe\n government\nThe\n coins\n were\nCongress \ncalled \nin the coins";
     let expectedOutput = "ns";
-    assert.equal(fetchTailContent(string, 2, ""), expectedOutput);
+    assert.equal(fetchTailContent(content, 2, ""), expectedOutput);
   });
 });
 
