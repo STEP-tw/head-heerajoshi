@@ -1,5 +1,5 @@
 const optionType = function(option){
-  let optionValue = { "n": "lines", "c": "bytes" };
+  const optionValue = { "n": "lines", "c": "bytes" };
   return optionValue[option] || option;
 }
 
