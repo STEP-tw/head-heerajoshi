@@ -61,6 +61,7 @@ const createCommand = name => function(userInput, fs) {
   let result = runCommand.bind(null, userInput, handler.fetch, fs, name);
   return userInput.files.map(result).join("\n");
 };
+
 const head = createCommand('head');
 const tail = createCommand('tail');
 

@@ -1,6 +1,7 @@
 const optionType = function(option){
   const optionValue = { "n": "lines", "c": "bytes" };
-  return optionValue[option] || option;
+  option = optionValue[option];
+  return option;
 }
 
 const inputSeparator = function(userInputs) {
